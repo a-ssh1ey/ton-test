@@ -99,4 +99,4 @@ let githubUsername, githubRepo, botUsername;
   
   // Poll for updates every 5 seconds
   setInterval(getUserId, 5000);
-  
+})(); // <-- This line closes the async IIFE
