@@ -13,16 +13,20 @@ const UserProfile: React.FC<UserProfileProps> = ({ botToken, userId }) => {
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
+    console.log("Fetching data for userId:", userId); // Debugging line
+
     // Fetch user data
     const fetchUserData = async () => {
       try {
-        setLoading(true); // Start loading
-        setError(""); // Clear previous errors
+        setLoading(true);
+        setError("");
 
         // Get user profile information
         const userResponse = await axios.get(
           `https://api.telegram.org/bot${botToken}/getChat?chat_id=${userId}`
         );
+
+        console.log("User data fetched:", userResponse.data.result); // Debugging line
 
         if (userResponse.data.result) {
           setUserName(userResponse.data.result.first_name);
@@ -35,18 +39,23 @@ const UserProfile: React.FC<UserProfileProps> = ({ botToken, userId }) => {
           `https://api.telegram.org/bot${botToken}/getUserProfilePhotos?user_id=${userId}&limit=1`
         );
 
+        console.log("Photos data fetched:", photosResponse.data.result); // Debugging line
+
         if (
           photosResponse.data.result.photos &&
           photosResponse.data.result.photos.length > 0
         ) {
           const fileId =
             photosResponse.data.result.photos[0][0].file_id; // Get the file_id of the smallest photo
+
           // Get the file path
           const fileResponse = await axios.get(
             `https://api.telegram.org/bot${botToken}/getFile?file_id=${fileId}`
           );
           const filePath = fileResponse.data.result.file_path;
           const avatarUrl = `https://api.telegram.org/file/bot${botToken}/${filePath}`;
+
+          console.log("Avatar URL:", avatarUrl); // Debugging line
 
           setUserAvatar(avatarUrl);
         } else {
@@ -56,7 +65,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ botToken, userId }) => {
         console.error("Error fetching user data:", error);
         setError("Failed to fetch user data");
       } finally {
-        setLoading(false); // Stop loading
+        setLoading(false);
       }
     };
 
