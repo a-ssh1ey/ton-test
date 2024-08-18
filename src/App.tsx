@@ -34,7 +34,11 @@ function App() {
 
   // Extract userId from URL parameters
   const urlParams = new URLSearchParams(window.location.search);
-  const userId = urlParams.get("userId") || ""; // Provide a default empty string if userId is null
+  const userId = urlParams.get("userId");
+
+  if (!userId) {
+    return <div>Error: No user ID provided</div>;
+  }
 
   return (
     <StyledApp>
@@ -59,5 +63,6 @@ function App() {
     </StyledApp>
   );
 }
+
 
 export default App;

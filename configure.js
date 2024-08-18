@@ -58,8 +58,8 @@ let githubUsername, githubRepo, botUsername;
 
   const setMenuButton = async (userId) => {
     const webAppUrl = `${url}?userId=${userId}`;
-    console.log(`\n\nSetting bot ${botUsername} webapp url to ${webAppUrl}`);
-
+    console.log(`Setting bot ${botUsername} webapp url to ${webAppUrl}`);
+  
     const resp = await axios.post(
       `https://api.telegram.org/bot${accessToken}/setChatMenuButton`,
       {
@@ -72,22 +72,20 @@ let githubUsername, githubRepo, botUsername;
         },
       }
     ).catch(exitError);
-
+  
     if (resp.status === 200) {
-      console.log(
-        `\nYou're all set! Visit https://t.me/${botUsername} to interact with your bot`
-      );
+      console.log(`User ${userId} is all set! Visit https://t.me/${botUsername} to interact with your bot`);
     } else {
-      exitError(`\nSomething went wrong! ${resp.error}`);
+      console.error(`Failed to set URL for user ${userId}: ${resp.error}`);
     }
   };
-
+  
   const getUserId = async () => {
     try {
       const updates = await axios.get(
         `https://api.telegram.org/bot${accessToken}/getUpdates`
       );
-      
+  
       updates.data.result.forEach(update => {
         if (update.message) {
           const userId = update.message.from.id;
@@ -95,10 +93,10 @@ let githubUsername, githubRepo, botUsername;
         }
       });
     } catch (e) {
-      exitError(`\nFailed to get updates: ${e.message}`);
+      console.error(`Failed to get updates: ${e.message}`);
     }
   };
-
+  
   // Poll for updates every 5 seconds
   setInterval(getUserId, 5000);
-})();
+  
