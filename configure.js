@@ -24,6 +24,9 @@ console.log(banner);
 
 let githubUsername, githubRepo, botUsername;
 
+// Debounce store to prevent repeated setting for the same user
+const debounceStore = new Map();
+
 (async () => {
   try {
     const file = fs.readFileSync(".git/config").toString();
@@ -57,26 +60,44 @@ let githubUsername, githubRepo, botUsername;
   const url = `https://${githubUsername}.github.io/${githubRepo}`;
 
   const setMenuButton = async (userId) => {
+    const currentTime = Date.now();
+
+    // Check if we have set the URL for this user recently
+    if (debounceStore.has(userId)) {
+      const lastSetTime = debounceStore.get(userId);
+      // If last set was within the last 60 seconds, skip setting the URL
+      if (currentTime - lastSetTime < 60000) {
+        console.log(`Skipping URL set for user ${userId} to avoid rate limiting.`);
+        return;
+      }
+    }
+
+    debounceStore.set(userId, currentTime); // Update the last set time
+
     const webAppUrl = `${url}?userId=${userId}`;
     console.log(`Setting bot ${botUsername} webapp url to ${webAppUrl}`);
   
-    const resp = await axios.post(
-      `https://api.telegram.org/bot${accessToken}/setChatMenuButton`,
-      {
-        menu_button: {
-          type: "web_app",
-          text: "Launch Webapp",
-          web_app: {
-            url: webAppUrl,
+    try {
+      const resp = await axios.post(
+        `https://api.telegram.org/bot${accessToken}/setChatMenuButton`,
+        {
+          menu_button: {
+            type: "web_app",
+            text: "Launch Webapp",
+            web_app: {
+              url: webAppUrl,
+            },
           },
-        },
+        }
+      );
+
+      if (resp.status === 200) {
+        console.log(`User ${userId} is all set! Visit https://t.me/${botUsername} to interact with your bot`);
+      } else {
+        console.error(`Failed to set URL for user ${userId}: ${resp.statusText}`);
       }
-    ).catch(exitError);
-  
-    if (resp.status === 200) {
-      console.log(`User ${userId} is all set! Visit https://t.me/${botUsername} to interact with your bot`);
-    } else {
-      console.error(`Failed to set URL for user ${userId}: ${resp.error}`);
+    } catch (error) {
+      console.error(`Error setting URL for user ${userId}: ${error.message}`);
     }
   };
   
@@ -97,6 +118,6 @@ let githubUsername, githubRepo, botUsername;
     }
   };
   
-  // Poll for updates every 5 seconds
-  setInterval(getUserId, 5000);
-})(); // <-- This line closes the async IIFE
+  // Poll for updates every 10 seconds
+  setInterval(getUserId, 10000);
+})();
