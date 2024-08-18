@@ -11,6 +11,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ botToken, userId }) => {
   const [userAvatar, setUserAvatar] = useState<string>("");
 
   useEffect(() => {
+    // Fetch user data when the component is first mounted
     const fetchUserData = async () => {
       try {
         // Fetch user name
@@ -43,7 +44,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ botToken, userId }) => {
     };
 
     fetchUserData();
-  }, [botToken, userId]);
+  }, [botToken, userId]); // Dependency array ensures this runs only when userId changes (i.e., on first load)
 
   return (
     <div>

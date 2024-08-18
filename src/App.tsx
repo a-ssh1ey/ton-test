@@ -33,6 +33,7 @@ function App() {
   const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
+    // Extract userId from URL parameters when the app is launched
     const urlParams = new URLSearchParams(window.location.search);
     const newUserId = urlParams.get("userId");
 
@@ -41,7 +42,7 @@ function App() {
     } else {
       console.error("No userId found in the URL parameters");
     }
-  }, []); // This will run only once on component mount
+  }, []); // Only runs once on app launch
 
   if (!userId) {
     return <div>Error: No user ID provided</div>;
