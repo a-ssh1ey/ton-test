@@ -1,16 +1,15 @@
+import React, { useEffect, useState } from 'react';
 import "./App.css";
 import { TonConnectButton } from "@tonconnect/ui-react";
-import { Counter } from "./components/Counter";
-import { Jetton } from "./components/Jetton";
-import { TransferTon } from "./components/TransferTon";
 import styled from "styled-components";
 import { Button, FlexBoxCol, FlexBoxRow } from "./components/styled/styled";
 import { useTonConnect } from "./hooks/useTonConnect";
 import { CHAIN } from "@tonconnect/protocol";
 import UserProfile from "./components/UserProfile";
 import "@twa-dev/sdk";
+import { TransferTon } from './components/TransferTon';
 
-const accessToken = '7528353122:AAHXZoQ8OAeWa3IIm0rWdwmKl9NeifDI7Po'; // Define accessToken
+const accessToken = '7528353122:AAHXZoQ8OAeWa3IIm0rWdwmKl9NeifDI7Po';
 
 const StyledApp = styled.div`
   background-color: #e8e8e8;
@@ -31,10 +30,25 @@ const AppContainer = styled.div`
 
 function App() {
   const { network } = useTonConnect();
+  const [userId, setUserId] = useState<string | null>(null);
 
-  // Extract userId from URL parameters
-  const urlParams = new URLSearchParams(window.location.search);
-  const userId = urlParams.get("userId");
+  useEffect(() => {
+    const updateUserIdFromUrl = () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const newUserId = urlParams.get("userId");
+      setUserId(newUserId);
+    };
+
+    // Extract userId from URL parameters when the app loads
+    updateUserIdFromUrl();
+
+    // Listen for URL changes to update userId
+    window.addEventListener('popstate', updateUserIdFromUrl);
+
+    return () => {
+      window.removeEventListener('popstate', updateUserIdFromUrl);
+    };
+  }, []);
 
   if (!userId) {
     return <div>Error: No user ID provided</div>;
@@ -55,14 +69,12 @@ function App() {
                 : "N/A"}
             </Button>
           </FlexBoxRow>
-     
+
           <TransferTon />
-    
         </FlexBoxCol>
       </AppContainer>
     </StyledApp>
   );
 }
-
 
 export default App;
