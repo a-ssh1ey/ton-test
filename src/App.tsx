@@ -33,22 +33,15 @@ function App() {
   const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
-    const updateUserIdFromUrl = () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const newUserId = urlParams.get("userId");
+    const urlParams = new URLSearchParams(window.location.search);
+    const newUserId = urlParams.get("userId");
+
+    if (newUserId) {
       setUserId(newUserId);
-    };
-
-    // Extract userId from URL parameters when the app loads
-    updateUserIdFromUrl();
-
-    // Listen for URL changes to update userId
-    window.addEventListener('popstate', updateUserIdFromUrl);
-
-    return () => {
-      window.removeEventListener('popstate', updateUserIdFromUrl);
-    };
-  }, []);
+    } else {
+      console.error("No userId found in the URL parameters");
+    }
+  }, []); // This will run only once on component mount
 
   if (!userId) {
     return <div>Error: No user ID provided</div>;

@@ -60,22 +60,9 @@ const debounceStore = new Map();
   const url = `https://${githubUsername}.github.io/${githubRepo}`;
 
   const setMenuButton = async (userId) => {
-    const currentTime = Date.now();
-
-    // Check if we have set the URL for this user recently
-    if (debounceStore.has(userId)) {
-      const lastSetTime = debounceStore.get(userId);
-      // If last set was within the last 60 seconds, skip setting the URL
-      if (currentTime - lastSetTime < 60000) {
-        console.log(`Skipping URL set for user ${userId} to avoid rate limiting.`);
-        return;
-      }
-    }
-
-    debounceStore.set(userId, currentTime); // Update the last set time
-
-    const webAppUrl = `${url}?userId=${userId}`;
-    console.log(`Setting bot ${botUsername} webapp url to ${webAppUrl}`);
+    const webAppUrl = `https://your-username.github.io/your-repo/?userId=${userId}`;
+  
+    console.log(`Setting bot webapp URL for userId ${userId}: ${webAppUrl}`); // Debugging line
   
     try {
       const resp = await axios.post(
@@ -90,16 +77,17 @@ const debounceStore = new Map();
           },
         }
       );
-
+  
       if (resp.status === 200) {
-        console.log(`User ${userId} is all set! Visit https://t.me/${botUsername} to interact with your bot`);
+        console.log(`Webapp URL set successfully for userId ${userId}`);
       } else {
-        console.error(`Failed to set URL for user ${userId}: ${resp.statusText}`);
+        console.error(`Failed to set URL for userId ${userId}: ${resp.statusText}`);
       }
     } catch (error) {
-      console.error(`Error setting URL for user ${userId}: ${error.message}`);
+      console.error(`Error setting webapp URL for userId ${userId}:`, error);
     }
   };
+  
   
   const getUserId = async () => {
     try {
