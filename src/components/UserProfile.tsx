@@ -9,16 +9,26 @@ interface UserProfileProps {
 const UserProfile: React.FC<UserProfileProps> = ({ botToken, userId }) => {
   const [userName, setUserName] = useState<string>("");
   const [userAvatar, setUserAvatar] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>("");
 
   useEffect(() => {
     // Fetch user data
     const fetchUserData = async () => {
       try {
+        setLoading(true); // Start loading
+        setError(""); // Clear previous errors
+
         // Get user profile information
         const userResponse = await axios.get(
           `https://api.telegram.org/bot${botToken}/getChat?chat_id=${userId}`
         );
-        setUserName(userResponse.data.result.first_name);
+
+        if (userResponse.data.result) {
+          setUserName(userResponse.data.result.first_name);
+        } else {
+          setError("Failed to fetch user name");
+        }
 
         // Get user profile photos
         const photosResponse = await axios.get(
@@ -39,14 +49,27 @@ const UserProfile: React.FC<UserProfileProps> = ({ botToken, userId }) => {
           const avatarUrl = `https://api.telegram.org/file/bot${botToken}/${filePath}`;
 
           setUserAvatar(avatarUrl);
+        } else {
+          setError("No profile photos found");
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
+        setError("Failed to fetch user data");
+      } finally {
+        setLoading(false); // Stop loading
       }
     };
 
     fetchUserData();
   }, [botToken, userId]);
+
+  if (loading) {
+    return <p>Loading user data...</p>;
+  }
+
+  if (error) {
+    return <p style={{ color: "red" }}>{error}</p>;
+  }
 
   return (
     <div style={styles.container}>
@@ -63,7 +86,7 @@ const styles = {
     padding: "10px",
     backgroundColor: "#f5f5f5",
     borderRadius: "8px",
-    position: "absolute" as "absolute", // Explicitly cast to the 'Position' type
+    position: "absolute" as "absolute",
     top: "10px",
     left: "10px",
   },
