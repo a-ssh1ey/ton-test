@@ -9,9 +9,8 @@ import { useTonConnect } from "./hooks/useTonConnect";
 import { CHAIN } from "@tonconnect/protocol";
 import UserProfile from "./components/UserProfile";
 import "@twa-dev/sdk";
-const userId = '749783684';
-const accessToken = '7528353122:AAHXZoQ8OAeWa3IIm0rWdwmKl9NeifDI7Po';
 
+const accessToken = '7528353122:AAHXZoQ8OAeWa3IIm0rWdwmKl9NeifDI7Po'; // Define accessToken
 
 const StyledApp = styled.div`
   background-color: #e8e8e8;
@@ -32,6 +31,10 @@ const AppContainer = styled.div`
 
 function App() {
   const { network } = useTonConnect();
+
+  // Extract userId from URL parameters
+  const urlParams = new URLSearchParams(window.location.search);
+  const userId = urlParams.get("userId") || ""; // Provide a default empty string if userId is null
 
   return (
     <StyledApp>
