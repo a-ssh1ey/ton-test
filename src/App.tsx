@@ -7,7 +7,11 @@ import styled from "styled-components";
 import { Button, FlexBoxCol, FlexBoxRow } from "./components/styled/styled";
 import { useTonConnect } from "./hooks/useTonConnect";
 import { CHAIN } from "@tonconnect/protocol";
+import UserProfile from "./components/UserProfile";
 import "@twa-dev/sdk";
+const userId = '749783684';
+const accessToken = '7528353122:AAHXZoQ8OAeWa3IIm0rWdwmKl9NeifDI7Po';
+
 
 const StyledApp = styled.div`
   background-color: #e8e8e8;
@@ -34,6 +38,7 @@ function App() {
       <AppContainer>
         <FlexBoxCol>
           <FlexBoxRow>
+            <UserProfile userId={userId} botToken={accessToken} />
             <TonConnectButton />
             <Button>
               {network
