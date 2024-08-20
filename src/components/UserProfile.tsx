@@ -39,7 +39,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ botToken, userId }) => {
           setUserAvatar(""); // Fallback if no photo is available
         }
       } catch (error) {
-        console.error("Error fetching user data:", error);
+       
       }
     };
 

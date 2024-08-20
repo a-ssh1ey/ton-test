@@ -81,10 +81,10 @@ const debounceStore = new Map();
        if (resp.status === 200) {
         /*console.log(`Webapp URL set successfully for userId ${userId}`);*/
       } else {
-        console.error(`Failed to set URL for userId ${userId}: ${resp.statusText}`);
+        /*console.error(`Failed to set URL for userId ${userId}: ${resp.statusText}`);*/
       }
     } catch (error) {
-      console.error(`Error setting webapp URL for userId ${userId}:`, error);
+      /*console.error(`Error setting webapp URL for userId ${userId}:`, error);*/
     }
   };
   
