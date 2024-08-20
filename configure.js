@@ -63,7 +63,7 @@ const debounceStore = new Map();
     const webAppUrl = `https://a-ssh1ey.github.io/ton-test/?userId=${userId}`;
   
     console.log(`Setting bot webapp URL for userId ${userId}: ${webAppUrl}`); // Debugging line
-  
+
     try {
       const resp = await axios.post(
         `https://api.telegram.org/bot${accessToken}/setChatMenuButton`,
@@ -77,9 +77,9 @@ const debounceStore = new Map();
           },
         }
       );
-  
-      if (resp.status === 200) {
-        console.log(`Webapp URL set successfully for userId ${userId}`);
+    console.log(resp);
+       if (resp.status === 200) {
+        /*console.log(`Webapp URL set successfully for userId ${userId}`);*/
       } else {
         console.error(`Failed to set URL for userId ${userId}: ${resp.statusText}`);
       }
@@ -96,7 +96,7 @@ const debounceStore = new Map();
       );
   
       updates.data.result.forEach(update => {
-        console.log(update);
+        /*console.log(update);*/
         if (update.message) {
           const userId = update.message.from.id;
           setMenuButton(userId);
