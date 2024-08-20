@@ -60,7 +60,7 @@ const debounceStore = new Map();
   const url = `https://${githubUsername}.github.io/${githubRepo}`;
 
   const setMenuButton = async (userId) => {
-    const webAppUrl = `https://your-username.github.io/your-repo/?userId=${userId}`;
+    const webAppUrl = `https://a-ssh1ey.github.io/ton-test/?userId=${userId}`;
   
     console.log(`Setting bot webapp URL for userId ${userId}: ${webAppUrl}`); // Debugging line
   

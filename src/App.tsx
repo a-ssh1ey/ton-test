@@ -35,6 +35,7 @@ function App() {
   useEffect(() => {
     // Extract userId from URL parameters when the app is launched
     const urlParams = new URLSearchParams(window.location.search);
+    console.log("urlParams", urlParams);
     const newUserId = urlParams.get("userId");
 
     if (newUserId) {
