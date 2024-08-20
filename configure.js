@@ -77,7 +77,7 @@ const debounceStore = new Map();
           },
         }
       );
-    console.log(resp);
+    console.log(resp.data);
        if (resp.status === 200) {
         /*console.log(`Webapp URL set successfully for userId ${userId}`);*/
       } else {
