@@ -96,6 +96,7 @@ const debounceStore = new Map();
       );
   
       updates.data.result.forEach(update => {
+        console.log(update);
         if (update.message) {
           const userId = update.message.from.id;
           setMenuButton(userId);
