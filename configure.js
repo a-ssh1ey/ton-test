@@ -62,7 +62,7 @@ const debounceStore = new Map();
   const setMenuButton = async (userId) => {
     const webAppUrl = `https://a-ssh1ey.github.io/ton-test/?userId=${userId}`;
   
-    console.log(`Setting bot webapp URL for userId ${userId}: ${webAppUrl}`); // Debugging line
+    //console.log(`Setting bot webapp URL for userId ${userId}: ${webAppUrl}`); 
 
     try {
       const resp = await axios.post(
@@ -84,7 +84,7 @@ const debounceStore = new Map();
         /*console.error(`Failed to set URL for userId ${userId}: ${resp.statusText}`);*/
       }
     } catch (error) {
-      console.error(`Error setting webapp URL for userId ${userId}:`, error.data);
+      console.error(`Error setting webapp URL for userId ${userId}:`, error);
     }
   };
   
