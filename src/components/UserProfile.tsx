@@ -49,8 +49,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ botToken, userId }) => {
   
   return (
     <div>
-      <p>UserId: {userId}</p>
-      <p>Name: {userName}</p>
+      <p>{userName}</p>
       {userAvatar ? (
         <img src={userAvatar} alt="User Avatar" width="50" height="50" />
       ) : (

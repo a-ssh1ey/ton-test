@@ -55,7 +55,7 @@ function App() {
       <AppContainer>
         <FlexBoxCol>
           <FlexBoxRow>
-            <UserProfile userId={userId} botToken={accessToken} />
+           
             <TonConnectButton />
             <Button>
               {network
@@ -64,6 +64,7 @@ function App() {
                   : "testnet"
                 : "N/A"}
             </Button>
+            <UserProfile userId={userId} botToken={accessToken} />
           </FlexBoxRow>
 
           <TransferTon />
