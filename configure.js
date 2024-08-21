@@ -36,7 +36,7 @@ const debounceStore = new Map();
     githubRepo = params[2];
   } catch (e) {}
 
-  const accessToken = '7528353122:AAHXZoQ8OAeWa3IIm0rWdwmKl9NeifDI7Po';
+  const accessToken = '7456487049:AAF148xa94-xy-0xiq-1wylHQe1e3YGk3Tc';
  
   const githubUsernameQ = await question(
     `Enter your github username${

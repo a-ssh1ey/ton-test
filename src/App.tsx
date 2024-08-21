@@ -9,7 +9,7 @@ import UserProfile from "./components/UserProfile";
 import "@twa-dev/sdk";
 import { TransferTon } from './components/TransferTon';
 
-const accessToken = '7528353122:AAHXZoQ8OAeWa3IIm0rWdwmKl9NeifDI7Po';
+const accessToken = '7456487049:AAF148xa94-xy-0xiq-1wylHQe1e3YGk3Tc';
 
 const StyledApp = styled.div`
   background-color: #e8e8e8;
