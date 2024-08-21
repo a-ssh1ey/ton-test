@@ -107,6 +107,15 @@ const debounceStore = new Map();
     }
   };
   
+ 
   // Poll for updates every 10 seconds
-  setInterval(getUserId, 10000);
+const intervalId = setInterval(getUserId, 10000);
+
+// Пример остановки интервала при завершении работы скрипта
+process.on('SIGINT', () => {
+  clearInterval(intervalId);
+  rl.close();
+  process.exit(0);
+});
+
 })();
