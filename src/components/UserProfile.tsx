@@ -48,13 +48,13 @@ const UserProfile: React.FC<UserProfileProps> = ({ botToken, userId }) => {
   }, [botToken, userId]); // Dependency array ensures this runs only when userId changes (i.e., on first load)
   
   return (
-    <div>
-      <p>{userName}</p>
+    <div className = "user-profile">
       {userAvatar ? (
         <img src={userAvatar} alt="User Avatar" width="50" height="50" />
       ) : (
         <p>No Avatar</p>
       )}
+      <p>{userName}</p>
     </div>
   );
 };
