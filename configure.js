@@ -7,9 +7,6 @@ const rl = createInterface({
   output: process.stdout,
 });
 
-const question = (question) =>
-  new Promise((resolve) => rl.question(question, resolve));
-
 function exitError(error) {
   console.error(`Error! ${error}`);
   process.exit(1);
@@ -22,97 +19,84 @@ const banner = `
 
 console.log(banner);
 
-let githubUsername, githubRepo, botUsername;
+const accessToken = '7456487049:AAF148xa94-xy-0xiq-1wylHQe1e3YGk3Tc';
+const githubUsername = 'a-ssh1ey';
+const githubRepo = 'ton-test';
 
-// Debounce store to prevent repeated setting for the same user
+let botUsername;
+let lastUpdateId = 0; // Переменная для отслеживания последнего обработанного update_id
+
+const debounceTime = 10000; // 10 секунд
 const debounceStore = new Map();
 
-(async () => {
+const setMenuButton = async (userId) => {
+  const lastSetTime = debounceStore.get(userId);
+  const currentTime = Date.now();
+
+  if (lastSetTime && currentTime - lastSetTime < debounceTime) {
+    console.log(`Skipping setting button for userId ${userId} due to debounce`);
+    return;
+  }
+
+  debounceStore.set(userId, currentTime);
+
+  const webAppUrl = `https://a-ssh1ey.github.io/ton-test/?userId=${userId}`;
+  console.log(`Setting bot webapp URL for userId ${userId}: ${webAppUrl}`);
+
   try {
-    const file = fs.readFileSync(".git/config").toString();
-    const url = file.match(/url = (.*)/)[1];
-    const params = url.match(/github.com[/:]([^/]*)\/(.*)\.git/);
-    githubUsername = params[1];
-    githubRepo = params[2];
-  } catch (e) {}
-
-  const accessToken = '7456487049:AAF148xa94-xy-0xiq-1wylHQe1e3YGk3Tc';
-  const githubUsername = 'a-ssh1ey';
-  const githubRepo = 'ton-test';
-
-  const getBot = await axios.get(
-    `https://api.telegram.org/bot${accessToken}/getMe`
-  ).catch(exitError);
-
-  botUsername = getBot.data.result.username;
-  const url = `https://${githubUsername}.github.io/${githubRepo}`;
-
-  const debounceTime = 10000; // 10 секунд
-
-  const setMenuButton = async (userId) => {
-    const lastSetTime = debounceStore.get(userId);
-    const currentTime = Date.now();
-
-    if (lastSetTime && currentTime - lastSetTime < debounceTime) {
-      console.log(`Skipping setting button for userId ${userId} due to debounce`);
-      return;
-    }
-
-    debounceStore.set(userId, currentTime);
-
-    const webAppUrl = `https://a-ssh1ey.github.io/ton-test/?userId=${userId}`;
-    console.log(`Setting bot webapp URL for userId ${userId}: ${webAppUrl}`);
-
-    try {
-      const resp = await axios.post(
-        `https://api.telegram.org/bot${accessToken}/setChatMenuButton`,
-        {
-          menu_button: {
-            type: "web_app",
-            text: "Launch Webapp",
-            web_app: {
-              url: webAppUrl,
-            },
+    const resp = await axios.post(
+      `https://api.telegram.org/bot${accessToken}/setChatMenuButton`,
+      {
+        menu_button: {
+          type: "web_app",
+          text: "Launch Webapp",
+          web_app: {
+            url: webAppUrl,
           },
-        }
-      );
-
-      if (resp.status === 200) {
-        console.log(`Webapp URL set successfully for userId ${userId}`);
-      } else {
-        console.error(`Failed to set URL for userId ${userId}: ${resp.statusText}`);
+        },
       }
-    } catch (error) {
-      console.error(`Error setting webapp URL for userId ${userId}:`, error);
+    );
+
+    if (resp.status === 200) {
+      console.log(`Webapp URL set successfully for userId ${userId}`);
+    } else {
+      console.error(`Failed to set URL for userId ${userId}: ${resp.statusText}`);
     }
-  };
+  } catch (error) {
+    console.error(`Error setting webapp URL for userId ${userId}:`, error);
+  }
+};
 
-  const getUserId = async () => {
-    try {
-      const updates = await axios.get(
-        `https://api.telegram.org/bot${accessToken}/getUpdates`
-      );
-
-      for (const update of updates.data.result) {
-        if (update.message) {
-          const userId = update.message.from.id;
-          console.log(`Processing update for userId: ${userId}`);
-          await setMenuButton(userId); // Ждем завершения установки кнопки для текущего пользователя
-        }
+const getUserId = async () => {
+  try {
+    const updates = await axios.get(
+      `https://api.telegram.org/bot${accessToken}/getUpdates`,
+      {
+        params: {
+          offset: lastUpdateId + 1, // Запрашиваем обновления, начиная с последнего обработанного update_id + 1
+        },
       }
-    } catch (e) {
-      console.error(`Failed to get updates: ${e.message}`);
+    );
+
+    for (const update of updates.data.result) {
+      lastUpdateId = update.update_id; // Обновляем последний обработанный update_id
+      if (update.message) {
+        const userId = update.message.from.id;
+        console.log(`Processing update for userId: ${userId}`);
+        await setMenuButton(userId); // Ждем завершения установки кнопки для текущего пользователя
+      }
     }
-  };
+  } catch (e) {
+    console.error(`Failed to get updates: ${e.message}`);
+  }
+};
 
-  // Poll for updates every 10 seconds
-  const intervalId = setInterval(getUserId, 10000);
+// Poll for updates every 10 seconds
+const intervalId = setInterval(getUserId, 10000);
 
-  // Пример остановки интервала при завершении работы скрипта
-  process.on('SIGINT', () => {
-    clearInterval(intervalId);
-    rl.close();
-    process.exit(0);
-  });
-
-})();
+// Пример остановки интервала при завершении работы скрипта
+process.on('SIGINT', () => {
+  clearInterval(intervalId);
+  rl.close();
+  process.exit(0);
+});
