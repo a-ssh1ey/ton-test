@@ -29,6 +29,24 @@ let lastUpdateId = 0; // Переменная для отслеживания п
 const debounceTime = 10000; // 10 секунд
 const debounceStore = new Map();
 
+// Function to reset the menu button to default
+const resetMenuButton = async (userId) => {
+  try {
+    await axios.post(
+      `https://api.telegram.org/bot${accessToken}/setChatMenuButton`,
+      {
+        menu_button: {
+          type: "default",
+        },
+      }
+    );
+    console.log(`Menu button reset to default for userId ${userId}`);
+  } catch (error) {
+    console.error(`Error resetting menu button for userId ${userId}:`, error);
+  }
+};
+
+// Function to set the menu button for a specific userId
 const setMenuButton = async (userId) => {
   const lastSetTime = debounceStore.get(userId);
   const currentTime = Date.now();
@@ -44,6 +62,8 @@ const setMenuButton = async (userId) => {
   console.log(`Setting bot webapp URL for userId ${userId}: ${webAppUrl}`);
 
   try {
+    await resetMenuButton(userId); // Reset to default before setting the new URL
+
     const resp = await axios.post(
       `https://api.telegram.org/bot${accessToken}/setChatMenuButton`,
       {
@@ -67,6 +87,24 @@ const setMenuButton = async (userId) => {
   }
 };
 
+// Function to check the current menu button status for a specific userId
+const checkMenuButton = async (userId) => {
+  try {
+    const resp = await axios.get(
+      `https://api.telegram.org/bot${accessToken}/getChatMenuButton`,
+      {
+        params: {
+          chat_id: userId,
+        },
+      }
+    );
+    console.log(`Menu button for userId ${userId}:`, resp.data);
+  } catch (error) {
+    console.error(`Error retrieving menu button for userId ${userId}:`, error);
+  }
+};
+
+// Function to process updates and set menu buttons
 const getUserId = async () => {
   try {
     const updates = await axios.get(
@@ -84,6 +122,9 @@ const getUserId = async () => {
         const userId = update.message.from.id;
         console.log(`Processing update for userId: ${userId}`);
         await setMenuButton(userId); // Ждем завершения установки кнопки для текущего пользователя
+
+        // Optionally check if the menu button was set correctly
+        await checkMenuButton(userId);
       }
     }
   } catch (e) {
