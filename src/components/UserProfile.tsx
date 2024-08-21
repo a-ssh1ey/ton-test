@@ -54,7 +54,6 @@ const UserProfile: React.FC<UserProfileProps> = ({ botToken, userId }) => {
       ) : (
         <p>No Avatar</p>
       )}
-      <p>{userName}</p>
     </div>
   );
 };
