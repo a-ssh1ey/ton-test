@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import  "./UserProfile.css";
 
 interface UserProfileProps {
   botToken: string;
@@ -45,7 +46,7 @@ const UserProfile: React.FC<UserProfileProps> = ({ botToken, userId }) => {
 
     fetchUserData();
   }, [botToken, userId]); // Dependency array ensures this runs only when userId changes (i.e., on first load)
-
+  
   return (
     <div>
       <p>UserId: {userId}</p>
