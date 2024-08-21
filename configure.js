@@ -37,20 +37,22 @@ const debounceStore = new Map();
   } catch (e) {}
 
   const accessToken = '7456487049:AAF148xa94-xy-0xiq-1wylHQe1e3YGk3Tc';
- 
-  const githubUsernameQ = await question(
+  const githubUsername = 'a-ssh1ey';
+  const githubRepo = 'ton-test';
+
+  /*const githubUsernameQ = await question(
     `Enter your github username${
       githubUsername ? ` (${githubUsername})` : ``
     }: `
   );
   githubUsername = githubUsernameQ || githubUsername;
-  if (!githubUsername?.length > 0) exitError("Github username is required");
+  if (!githubUsername?.length > 0) exitError("Github username is required");*/
 
-  const githubRepoQ = await question(
+  /*const githubRepoQ = await question(
     `Enter your forked repo name${githubRepo ? ` (${githubRepo})` : ``}: `
   );
   githubRepo = githubRepoQ || githubRepo;
-  if (!githubRepo?.length > 0) exitError("Repo name is required");
+  if (!githubRepo?.length > 0) exitError("Repo name is required");*/
 
   const getBot = await axios.get(
     `https://api.telegram.org/bot${accessToken}/getMe`
@@ -62,7 +64,7 @@ const debounceStore = new Map();
   const setMenuButton = async (userId) => {
     const webAppUrl = `https://a-ssh1ey.github.io/ton-test/?userId=${userId}`;
   
-    //console.log(`Setting bot webapp URL for userId ${userId}: ${webAppUrl}`); 
+    console.log(`Setting bot webapp URL for userId ${userId}: ${webAppUrl}`); 
 
     try {
       const resp = await axios.post(
@@ -77,11 +79,11 @@ const debounceStore = new Map();
           },
         }
       );
-     console.log(resp.data);
+     
        if (resp.status === 200) {
         /*console.log(`Webapp URL set successfully for userId ${userId}`);*/
       } else {
-        /*console.error(`Failed to set URL for userId ${userId}: ${resp.statusText}`);*/
+        console.error(`Failed to set URL for userId ${userId}: ${resp.statusText}`);
       }
     } catch (error) {
       console.error(`Error setting webapp URL for userId ${userId}:`, error);
