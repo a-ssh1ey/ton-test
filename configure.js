@@ -40,20 +40,6 @@ const debounceStore = new Map();
   const githubUsername = 'a-ssh1ey';
   const githubRepo = 'ton-test';
 
-  /*const githubUsernameQ = await question(
-    `Enter your github username${
-      githubUsername ? ` (${githubUsername})` : ``
-    }: `
-  );
-  githubUsername = githubUsernameQ || githubUsername;
-  if (!githubUsername?.length > 0) exitError("Github username is required");*/
-
-  /*const githubRepoQ = await question(
-    `Enter your forked repo name${githubRepo ? ` (${githubRepo})` : ``}: `
-  );
-  githubRepo = githubRepoQ || githubRepo;
-  if (!githubRepo?.length > 0) exitError("Repo name is required");*/
-
   const getBot = await axios.get(
     `https://api.telegram.org/bot${accessToken}/getMe`
   ).catch(exitError);
@@ -61,10 +47,21 @@ const debounceStore = new Map();
   botUsername = getBot.data.result.username;
   const url = `https://${githubUsername}.github.io/${githubRepo}`;
 
+  const debounceTime = 10000; // 10 секунд
+
   const setMenuButton = async (userId) => {
+    const lastSetTime = debounceStore.get(userId);
+    const currentTime = Date.now();
+
+    if (lastSetTime && currentTime - lastSetTime < debounceTime) {
+      console.log(`Skipping setting button for userId ${userId} due to debounce`);
+      return;
+    }
+
+    debounceStore.set(userId, currentTime);
+
     const webAppUrl = `https://a-ssh1ey.github.io/ton-test/?userId=${userId}`;
-  
-    console.log(`Setting bot webapp URL for userId ${userId}: ${webAppUrl}`); 
+    console.log(`Setting bot webapp URL for userId ${userId}: ${webAppUrl}`);
 
     try {
       const resp = await axios.post(
@@ -79,9 +76,9 @@ const debounceStore = new Map();
           },
         }
       );
-     
-       if (resp.status === 200) {
-        /*console.log(`Webapp URL set successfully for userId ${userId}`);*/
+
+      if (resp.status === 200) {
+        console.log(`Webapp URL set successfully for userId ${userId}`);
       } else {
         console.error(`Failed to set URL for userId ${userId}: ${resp.statusText}`);
       }
@@ -89,35 +86,33 @@ const debounceStore = new Map();
       console.error(`Error setting webapp URL for userId ${userId}:`, error);
     }
   };
-  
-  
+
   const getUserId = async () => {
     try {
       const updates = await axios.get(
         `https://api.telegram.org/bot${accessToken}/getUpdates`
       );
-  
-      updates.data.result.forEach(update => {
-        /*console.log(update);*/
+
+      for (const update of updates.data.result) {
         if (update.message) {
           const userId = update.message.from.id;
-          setMenuButton(userId);
+          console.log(`Processing update for userId: ${userId}`);
+          await setMenuButton(userId); // Ждем завершения установки кнопки для текущего пользователя
         }
-      });
+      }
     } catch (e) {
       console.error(`Failed to get updates: ${e.message}`);
     }
   };
-  
- 
-  // Poll for updates every 10 seconds
-const intervalId = setInterval(getUserId, 10000);
 
-// Пример остановки интервала при завершении работы скрипта
-process.on('SIGINT', () => {
-  clearInterval(intervalId);
-  rl.close();
-  process.exit(0);
-});
+  // Poll for updates every 10 seconds
+  const intervalId = setInterval(getUserId, 10000);
+
+  // Пример остановки интервала при завершении работы скрипта
+  process.on('SIGINT', () => {
+    clearInterval(intervalId);
+    rl.close();
+    process.exit(0);
+  });
 
 })();

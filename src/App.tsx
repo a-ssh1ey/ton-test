@@ -39,6 +39,7 @@ function App() {
     const newUserId = urlParams.get("userId");
 
     if (newUserId) {
+      console.log(`Setting userId: ${newUserId}`);
       setUserId(newUserId);
     } else {
       console.error("No userId found in the URL parameters");
