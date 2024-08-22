@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",                    // Поддержка новейшего стандарта ECMAScript
+    "lib": ["DOM", "DOM.Iterable", "ESNext"], // Поддержка веб-API и последней версии JS
+    "allowJs": true,                       // Разрешить работу с .js файлами
+    "skipLibCheck": true,                  // Пропуск проверки типов библиотек
+    "module": "ESNext",                    // Модульная система ESNext
+    "moduleResolution": "Node",            // Разрешение модулей как в Node.js
+    "resolveJsonModule": true,             // Поддержка импорта JSON-файлов
+    "jsx": "react-jsx"                     // Поддержка JSX в React
+  },
+  "include": ["src"]                       // Указываем директорию с исходными кодами
+}

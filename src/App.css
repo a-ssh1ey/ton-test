@@ -3,3 +3,22 @@
   --tg-theme-button-color: #2eaddc;
   --tg-theme-button-text-color: white;
 }
+
+.styled-app {
+  background-color: #e8e8e8;
+  color: black;
+  min-height: 100vh;
+  padding: 20px 20px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .styled-app {
+    background-color: #222;
+    color: white;
+  }
+}
+
+.app-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
