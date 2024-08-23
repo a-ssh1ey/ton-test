@@ -36,18 +36,19 @@ function App() {
     <div className="styled-app">
       <div className="app-container">
         <FlexBoxCol>
-          <FlexBoxRow>
-            <TonConnectButton />
-            <Button>
-              {network
-                ? network === CHAIN.MAINNET
-                  ? "mainnet"
-                  : "testnet"
-                : "N/A"}
-            </Button>
+          <div className="first_row">
+            <FlexBoxRow>
+              <TonConnectButton />
+              <Button>
+                {network
+                  ? network === CHAIN.MAINNET
+                    ? "mainnet"
+                    : "testnet"
+                  : "N/A"}
+              </Button>
+            </FlexBoxRow>
             <UserProfile userId={userId} botToken={accessToken} />
-          </FlexBoxRow>
-
+          </div>
           <TransferTon />
         </FlexBoxCol>
       </div>
