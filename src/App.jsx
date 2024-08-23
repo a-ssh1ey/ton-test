@@ -7,10 +7,19 @@ import { CHAIN } from "@tonconnect/protocol";
 import UserProfile from "./components/UserProfile/UserProfile";
 import "@twa-dev/sdk";
 import TransferTon from "./components/TransferTon/TransferTon";
+import { Create, Join, MainPage, Pending } from "./views";
+import { Body } from "./components/Body/Body";
 
 const accessToken = "7456487049:AAF148xa94-xy-0xiq-1wylHQe1e3YGk3Tc";
 
 function App() {
+  const [active, setActive] = useState(0);
+  const components = {
+    0: <MainPage setActive={setActive} selected={active} />,
+    1: <Join setActive={setActive} selected={active} />,
+    2: <Create setActive={setActive} selected={active} />,
+    3: <Pending setActive={setActive} selected={active} />,
+  };
   const { network } = useTonConnect();
   const [userId, setUserId] = useState(null);
 
@@ -49,7 +58,7 @@ function App() {
             </FlexBoxRow>
             <UserProfile userId={userId} botToken={accessToken} />
           </div>
-          <TransferTon />
+          {components[active]}
         </FlexBoxCol>
       </div>
     </div>
