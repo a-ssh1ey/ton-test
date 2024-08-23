@@ -41,7 +41,7 @@ const UserProfile = ({ botToken, userId }) => {
 
     fetchUserData();
   }, [botToken, userId]); // Этот эффект будет выполняться только при изменении botToken или userId
-  
+
   return (
     <div className="user-profile">
       {userAvatar ? (
@@ -49,7 +49,6 @@ const UserProfile = ({ botToken, userId }) => {
       ) : (
         <p>No Avatar</p>
       )}
-      <p>{userName}</p>
     </div>
   );
 };
