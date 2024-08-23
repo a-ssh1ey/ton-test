@@ -45,8 +45,8 @@ function App() {
                   : "testnet"
                 : "N/A"}
             </Button>
-            <UserProfile userId={userId} botToken={accessToken} />
           </FlexBoxRow>
+          <UserProfile userId={userId} botToken={accessToken} />
 
           <TransferTon />
         </FlexBoxCol>
