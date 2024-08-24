@@ -11,7 +11,7 @@ function Join({ setActive, selected, userId }) {
   const handleJoinDeal = () => {
     console.log("Sending request...");
     axios
-      .post(`${URL}/playground/join-deal/`, { code, user_id: userId })
+      .post(`${APIURL}/playground/join-deal/`, { code, user_id: userId })
       .then((response) => {
         console.log("Response received:", response.data);
         setText(`User joined deal with ID: ${response.data.deal_id}`);
