@@ -1,8 +1,8 @@
-import "./Button.css";
+import "./Button_extra.css";
 
 import React from "react";
 
-function Button({ text, inactive, onClick, disabled, secondary }) {
+function Button_extra({ text, inactive, onClick, disabled, secondary }) {
   return (
     <div
       className={`${inactive ? "inactive" : ""} ${disabled ? "disabled" : ""} ${
@@ -15,4 +15,4 @@ function Button({ text, inactive, onClick, disabled, secondary }) {
   );
 }
 
-export default Button;
+export default Button_extra;

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Button from "../components/Button/Button";
+import Button_extra from "../components/Button_extra/Button_extra";
 import axios from "axios";
 //import { URL } from "../config.js";
 
@@ -21,14 +21,18 @@ function Create({ setActive, selected }) {
 
   return (
     <div>
-      <Button
+      <Button_extra
         text="Back"
         inactive
         onclick={() => setActive(0)}
         disabled={selected === 0}
         secondary={true}
       />
-      <Button text="Create Deal" onclick={handleCreateDeal} secondary={false} />
+      <Button_extra
+        text="Create Deal"
+        onclick={handleCreateDeal}
+        secondary={false}
+      />
       <p>{text}</p>
     </div>
   );
