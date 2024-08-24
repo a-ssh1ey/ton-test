@@ -13,13 +13,6 @@ import { Body } from "./components/Body/Body";
 const accessToken = "7456487049:AAF148xa94-xy-0xiq-1wylHQe1e3YGk3Tc";
 
 function App() {
-  const [active, setActive] = useState(0);
-  const components = {
-    0: <MainPage setActive={setActive} selected={active} />,
-    1: <Join setActive={setActive} selected={active} />,
-    2: <Create setActive={setActive} selected={active} />,
-    3: <Pending setActive={setActive} selected={active} />,
-  };
   const { network } = useTonConnect();
   const [userId, setUserId] = useState(null);
 
@@ -41,6 +34,13 @@ function App() {
     return <div>Error: No user ID provided</div>;
   }
 
+  const [active, setActive] = useState(0);
+  const components = {
+    0: <MainPage setActive={setActive} selected={active} />,
+    1: <Join setActive={setActive} selected={active} userId={userId} />,
+    2: <Create setActive={setActive} selected={active} />,
+    3: <Pending setActive={setActive} selected={active} />,
+  };
   return (
     <div className="styled-app">
       <div className="app-container">

@@ -1,11 +1,13 @@
 import axios from "axios";
-import { createInterface } from "readline";
 import fs from "fs";
 
-const rl = createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
+export const APIURL = "https://assh1ey.pythonanywhere.com/";
+
+// Removed readline interface creation as it seems unnecessary
+// const rl = createInterface({
+//   input: process.stdin,
+//   output: process.stdout,
+// });
 
 function exitError(error) {
   console.error(`Error! ${error}`);
@@ -85,6 +87,6 @@ const intervalId = setInterval(getUserId, 10000);
 // Handle script termination
 process.on('SIGINT', () => {
   clearInterval(intervalId);
-  rl.close();
+  // Removed rl.close() since readline interface is not used
   process.exit(0);
 });
