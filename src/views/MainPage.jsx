@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "../styled/styled";
+import { Button } from "../components/styled/styled";
 
 function MainPage({ setActive, selected }) {
   return (

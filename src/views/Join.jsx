@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button } from "../styled/styled";
+import { Button } from "../components/styled/styled";
 import axios from "axios";
 //import {URL} from "../config.js";
 
