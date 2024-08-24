@@ -5,12 +5,9 @@ import styles from "./Body.module.css";
 function Body({ setActive, selected }) {
   return (
     <div className={styles.body}>
-      <Button
-        text="Join a deal"
-        inactive
-        onClick={() => setActive(1)}
-        disabled={selected === 1}
-      />
+      <Button inactive onClick={() => setActive(1)} disabled={selected === 1}>
+        Join a deal
+      </Button>
       <Button
         text="Create a deal"
         inactive
