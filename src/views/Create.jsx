@@ -24,13 +24,13 @@ function Create({ setActive, selected }) {
       <Button_extra
         text="Back"
         inactive
-        onclick={() => setActive(0)}
+        onClick={() => setActive(0)}
         disabled={selected === 0}
         secondary={true}
       />
       <Button_extra
         text="Create Deal"
-        onclick={handleCreateDeal}
+        onClick={handleCreateDeal}
         secondary={false}
       />
       <p>{text}</p>

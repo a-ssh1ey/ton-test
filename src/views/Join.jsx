@@ -32,7 +32,7 @@ function Join({ setActive, selected }) {
         <Button_extra
           text="Back"
           inactive
-          onclick={() => setActive(0)}
+          onClick={() => setActive(0)}
           disabled={selected === 0}
           secondary={true}
         />

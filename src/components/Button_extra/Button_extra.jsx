@@ -4,14 +4,15 @@ import React from "react";
 
 function Button_extra({ text, inactive, onClick, disabled, secondary }) {
   return (
-    <div
+    <button
       className={`${inactive ? "inactive" : ""} ${disabled ? "disabled" : ""} ${
         secondary ? "secondary" : ""
       } button`}
       onClick={onClick}
+      disabled={disabled} // добавляем свойство disabled
     >
       {text}
-    </div>
+    </button>
   );
 }
 
