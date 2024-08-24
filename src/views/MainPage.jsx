@@ -1,5 +1,5 @@
 import React from "react";
-import Body from "../components/Body/Body";
+import { Button } from "../styled/styled";
 
 function MainPage({ setActive, selected }) {
   return (

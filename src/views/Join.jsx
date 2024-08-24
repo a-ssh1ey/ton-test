@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Button from "../components/Button/Button";
+import { Button } from "../styled/styled";
 import axios from "axios";
 //import {URL} from "../config.js";
 
@@ -29,12 +29,13 @@ function Join({ setActive, selected }) {
     <div>
       <div>
         <Button
-          text="Back"
           inactive
           onclick={() => setActive(0)}
           disabled={selected === 0}
           secondary={true}
-        />
+        >
+          Back
+        </Button>
         <p>{text}</p>
       </div>
       <button onClick={() => setActive(0)} disabled={selected === 0}>
