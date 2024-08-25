@@ -31,8 +31,6 @@ function Pending({ setActive, selected }) {
         secondary={true}
       />
 
-      <p>{text}</p>
-
       <input
         type="text"
         value={userId}
