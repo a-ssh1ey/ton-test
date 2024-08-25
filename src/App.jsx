@@ -14,6 +14,7 @@ const accessToken = "7456487049:AAF148xa94-xy-0xiq-1wylHQe1e3YGk3Tc";
 function App() {
   const { network } = useTonConnect();
   const [userId, setUserId] = useState(null);
+  const [active, setActive] = useState(0);
 
   useEffect(() => {
     // Извлечение userId из параметров URL при запуске приложения
@@ -33,7 +34,6 @@ function App() {
     return <div>Error: No user ID provided</div>;
   }
 
-  const [active, setActive] = useState(0);
   const components = {
     0: <MainPage setActive={setActive} selected={active} />,
     1: <Join setActive={setActive} selected={active} userId={userId} />,
