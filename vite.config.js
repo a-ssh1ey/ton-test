@@ -8,5 +8,6 @@ export default defineConfig({
   base: ((process.env.GITHUB_REPOSITORY ?? "") + "/").match(/(\/.*)/)?.[1],
   build: {
     sourcemap: true,
+    minify: false,
   },
 });
