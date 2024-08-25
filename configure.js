@@ -82,10 +82,3 @@ const getUserId = async () => {
 
 // Poll for updates every 10 seconds
 const intervalId = setInterval(getUserId, 10000);
-
-// Handle script termination
-process.on('SIGINT', () => {
-  clearInterval(intervalId);
-  // Removed rl.close() since readline interface is not used
-  process.exit(0);
-});
