@@ -22,9 +22,16 @@ function Pending({ setActive, selected }) {
 
   return (
     <div>
-      <button onClick={() => setActive(0)} disabled={selected === 0}>
-        Back
-      </button>
+      <Button_extra
+        text="Back"
+        inactive
+        onClick={() => setActive(0)}
+        disabled={selected === 0}
+        secondary={true}
+      />
+
+      <p>{text}</p>
+
       <input
         type="text"
         value={userId}
