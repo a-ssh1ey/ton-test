@@ -9,7 +9,7 @@ function Button_extra({ text, inactive, onClick, disabled, secondary }) {
         secondary ? "secondary" : ""
       } button`}
       onClick={onClick}
-      disabled={disabled} // добавляем свойство disabled
+      disabled={disabled}
     >
       {text}
     </button>

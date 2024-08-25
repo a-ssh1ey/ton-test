@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Button_extra from "../components/Button_extra/Button_extra";
 //import { URL } from "../config.js";
 
 function Pending({ setActive, selected }) {
