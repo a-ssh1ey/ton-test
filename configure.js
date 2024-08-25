@@ -1,5 +1,4 @@
 import axios from "axios";
-import fs from "fs";
 
 export const APIURL = "https://assh1ey.pythonanywhere.com/";
 
