@@ -1,17 +1,7 @@
 import axios from "axios";
 
+// Ваша API ссылка (не используется в данном примере, но оставлена для контекста)
 export const APIURL = "https://assh1ey.pythonanywhere.com/";
-
-// Removed readline interface creation as it seems unnecessary
-// const rl = createInterface({
-//   input: process.stdin,
-//   output: process.stdout,
-// });
-
-function exitError(error) {
-  console.error(`Error! ${error}`);
-  process.exit(1);
-}
 
 const banner = `
 ▄▀▄ █▄░█ █▄░█ ▄▀▄ . ▄▀▀ ░ . ▄▀▀ ▄▀▀▄ █▀▄ █▀▄ ░
@@ -20,12 +10,13 @@ const banner = `
 
 console.log(banner);
 
-const accessToken = '7456487049:AAF148xa94-xy-0xiq-1wylHQe1e3YGk3Tc';
+const accessToken = '7456487049:AAF148xa94-xy-0xiq-1wylHQe1e3YGk3Tc'; // Замените на ваш токен
 const githubUsername = 'a-ssh1ey';
 const githubRepo = 'ton-test';
 
-let lastUpdateId = 0; // Variable to track the last processed update_id
+let lastUpdateId = 0; // Переменная для отслеживания последнего обработанного update_id
 
+// Функция для установки меню WebApp
 const setMenuButton = async (userId) => {
   const webAppUrl = `https://a-ssh1ey.github.io/ton-test/?userId=${userId}`;
   console.log(`Setting bot webapp URL for userId ${userId}: ${webAppUrl}`);
@@ -34,7 +25,7 @@ const setMenuButton = async (userId) => {
     const resp = await axios.post(
       `https://api.telegram.org/bot${accessToken}/setChatMenuButton`,
       {
-        chat_id: userId, // Explicitly specify the user chat ID
+        chat_id: userId,
         menu_button: {
           type: "web_app",
           text: "Launch Webapp",
@@ -55,30 +46,49 @@ const setMenuButton = async (userId) => {
   }
 };
 
-// Function to process updates and set menu buttons
-const getUserId = async () => {
-  try {
-    const updates = await axios.get(
-      `https://api.telegram.org/bot${accessToken}/getUpdates`,
-      {
-        params: {
-          offset: lastUpdateId + 1, // Request updates starting from the last processed update_id + 1
-        },
-      }
-    );
-
-    for (const update of updates.data.result) {
-      lastUpdateId = update.update_id; // Update the last processed update_id
-      if (update.message) {
-        const userId = update.message.from.id;
-        console.log(`Processing update for userId: ${userId}`);
-        await setMenuButton(userId); // Wait for menu button to be set for this user
-      }
-    }
-  } catch (e) {
-    console.error(`Failed to get updates: ${e.message}`);
+// Функция для обработки обновлений
+const processUpdate = async (update) => {
+  if (update.message && update.message.text === '/start') {
+    const userId = update.message.from.id;
+    console.log(`Received /start command from userId: ${userId}`);
+    await setMenuButton(userId);
   }
 };
 
-// Poll for updates every 10 seconds
-const intervalId = setInterval(getUserId, 10000);
+// Функция для получения обновлений с использованием длинного опроса
+const getUpdates = async () => {
+  try {
+    const response = await axios.get(
+      `https://api.telegram.org/bot${accessToken}/getUpdates`,
+      {
+        params: {
+          offset: lastUpdateId + 1, // Запрос обновлений начиная с последнего обработанного update_id + 1
+          timeout: 30, // Длинный опрос с таймаутом 30 секунд
+        },
+        timeout: 35 * 1000, // Установка таймаута запроса чуть больше, чем таймаут Telegram
+      }
+    );
+
+    const updates = response.data.result;
+
+    for (const update of updates) {
+      lastUpdateId = update.update_id; // Обновление последнего обработанного update_id
+      await processUpdate(update); // Обработка полученного обновления
+    }
+  } catch (error) {
+    console.error(`Error getting updates: ${error.message}`);
+    // В случае ошибки можно добавить задержку перед повторной попыткой
+    await new Promise(resolve => setTimeout(resolve, 1000));
+  }
+};
+
+// Функция для непрерывного получения обновлений
+const startLongPolling = async () => {
+  console.log("Starting long polling for updates...");
+  while (true) {
+    await getUpdates();
+  }
+};
+
+// Запуск длинного опроса
+startLongPolling();
