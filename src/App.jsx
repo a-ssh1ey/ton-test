@@ -37,7 +37,7 @@ function App() {
   const components = {
     0: <MainPage setActive={setActive} selected={active} />,
     1: <Join setActive={setActive} selected={active} userId={userId} />,
-    2: <Create setActive={setActive} selected={active} />,
+    2: <Create setActive={setActive} selected={active} userId={userId} />,
     3: <Pending setActive={setActive} selected={active} userId={userId} />,
   };
   return (
