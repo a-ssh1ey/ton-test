@@ -38,7 +38,7 @@ function App() {
     0: <MainPage setActive={setActive} selected={active} />,
     1: <Join setActive={setActive} selected={active} userId={userId} />,
     2: <Create setActive={setActive} selected={active} />,
-    3: <Pending setActive={setActive} selected={active} />,
+    3: <Pending setActive={setActive} selected={active} userId={userId} />,
   };
   return (
     <div className="styled-app">

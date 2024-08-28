@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Button_extra from "../components/Button_extra/Button_extra";
-//import { URL } from "../config.js";
+import { APIURL } from "../../configure";
 
-function Pending({ setActive, selected }) {
+function Pending({ setActive, selected, userId }) {
   const [deals, setDeals] = useState([]);
-  const [userId, setUserId] = useState(""); // ID пользователя
 
   useEffect(() => {
     if (userId) {
-      // Получение активных сделок пользователя при изменении userId
-      /* axios.get(`${URL}/playground/get-user-deals/`, { params: { user_id: userId } })
-                .then(response => {
-                    console.log('Deals received:', response.data.deals);
-                    setDeals(response.data.deals);
-                })
-                .catch(error => {
-                    console.error('Error fetching user deals:', error);
-                });*/
+      axios
+        .get(`${APIURL}/playground/get-user-deals/`, {
+          params: { user_id: userId },
+        })
+        .then((response) => {
+          console.log("Deals received:", response.data.deals);
+          setDeals(response.data.deals);
+        })
+        .catch((error) => {
+          console.error("Error fetching user deals:", error);
+        });
     }
   }, [userId]);
 
@@ -31,13 +32,6 @@ function Pending({ setActive, selected }) {
         secondary={true}
       />
 
-      <input
-        type="text"
-        value={userId}
-        onChange={(e) => setUserId(e.target.value)}
-        placeholder="Enter user ID"
-      />
-      <button onClick={() => setUserId(userId)}>Get Pending Deals</button>
       <ul>
         {deals.map((deal) => (
           <li
