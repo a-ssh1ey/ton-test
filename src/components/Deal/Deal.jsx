@@ -3,7 +3,7 @@ import "./Deal.css";
 
 const Deal = ({ dealId, dealCode, dealStatus, role }) => {
   const renderButtons = () => {
-    if (dealStatus === "unpaid") {
+    if (dealStatus === "created") {
       if (role === "buyer") {
         return <button className="deal-button">Transfer</button>;
       }
