@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Button_extra from "../components/Button_extra/Button_extra";
+import Deal from "../components/Deal/Deal";
 import { APIURL } from "../../configure";
 
 function Pending({ setActive, selected, userId }) {
@@ -34,9 +35,14 @@ function Pending({ setActive, selected, userId }) {
 
       <ul>
         {deals.map((deal) => (
-          <li
-            key={deal.id}
-          >{`Deal ID: ${deal.id}, Code: ${deal.code}, Status: ${deal.status}`}</li>
+          <li key={deal.id}>
+            <Deal
+              dealId={deal.id}
+              dealCode={deal.code}
+              dealStatus={deal.status}
+              role={deal.role}
+            />
+          </li>
         ))}
       </ul>
     </div>

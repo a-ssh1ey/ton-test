@@ -1,0 +1,44 @@
+.deal-container {
+    border: 1px solid #ccc;
+    padding: 16px;
+    border-radius: 8px;
+    width: 300px;
+    background-color: #f9f9f9;
+    margin: 10px;
+}
+
+.deal-info {
+    margin-bottom: 16px;
+}
+
+.deal-info p {
+    margin: 4px 0;
+    font-size: 14px;
+}
+
+.deal-actions {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.deal-button {
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.deal-button:hover {
+    background-color: #0056b3;
+}
+
+.deal-completed {
+    font-size: 14px;
+    color: green;
+    font-weight: bold;
+}

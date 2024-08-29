@@ -1,6 +1,6 @@
 import { Button } from "../styled/styled";
 import React from "react";
-import styles from "./Body.module.css";
+import "./Body.css";
 
 function Body({ setActive, selected }) {
   return (
