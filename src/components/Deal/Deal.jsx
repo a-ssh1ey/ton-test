@@ -1,12 +1,12 @@
 import React from "react";
 import "./Deal.css";
 import axios from "axios"; // Import axios for making HTTP requests
-
+import { APIURL } from "../../../configure";
 const Deal = ({ dealId, dealCode, dealStatus, role, onStatusChange }) => {
   const handleCancel = async () => {
     try {
       // Send a request to the backend to cancel the deal
-      const response = await axios.post("/api/cancel-deal/", {
+      const response = await axios.post(`${APIURL}/playground/join-deal/`, {
         dealId: dealId,
       });
 
