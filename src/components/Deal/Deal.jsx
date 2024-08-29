@@ -6,7 +6,7 @@ const Deal = ({ dealId, dealCode, dealStatus, role, onStatusChange }) => {
   const handleCancel = async () => {
     try {
       // Send a request to the backend to cancel the deal
-      const response = await axios.post(`${APIURL}/playground/join-deal/`, {
+      const response = await axios.post(`${APIURL}/playground/cancel-deal/`, {
         dealId: dealId,
       });
 
