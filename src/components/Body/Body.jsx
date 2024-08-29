@@ -4,7 +4,7 @@ import "./Body.css";
 
 function Body({ setActive, selected }) {
   return (
-    <div className={styles.body}>
+    <div className="body">
       <Button inactive onClick={() => setActive(1)} disabled={selected === 1}>
         Join a deal
       </Button>
