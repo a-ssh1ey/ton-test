@@ -1,17 +1,16 @@
 import React from "react";
+import axios from "axios";
 import "./Deal.css";
-import axios from "axios"; // Import axios for making HTTP requests
 import { APIURL } from "../../../configure";
+
 const Deal = ({ dealId, dealCode, dealStatus, role, onStatusChange }) => {
   const handleCancel = async () => {
     try {
-      // Send a request to the backend to cancel the deal
       const response = await axios.post(`${APIURL}/playground/cancel-deal/`, {
         dealId: dealId,
       });
 
       if (response.status === 200) {
-        // If the request is successful, update the status in the parent component
         onStatusChange(dealId, "canceled");
       }
     } catch (error) {

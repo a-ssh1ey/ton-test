@@ -23,6 +23,15 @@ function Pending({ setActive, selected, userId }) {
     }
   }, [userId]);
 
+  // Function to handle the status change
+  const handleStatusChange = (dealId, newStatus) => {
+    setDeals((prevDeals) =>
+      prevDeals.map((deal) =>
+        deal.id === dealId ? { ...deal, status: newStatus } : deal
+      )
+    );
+  };
+
   return (
     <div>
       <Button_extra
@@ -41,6 +50,7 @@ function Pending({ setActive, selected, userId }) {
               dealCode={deal.code}
               dealStatus={deal.status}
               role={deal.role}
+              onStatusChange={handleStatusChange} // Passing the function to Deal
             />
           </li>
         ))}
