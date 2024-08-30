@@ -24,13 +24,6 @@ function Create({ setActive, selected, userId }) {
   return (
     <div>
       <Button_extra
-        text="Back"
-        inactive
-        onClick={() => setActive(0)}
-        disabled={selected === 0}
-        secondary={true}
-      />
-      <Button_extra
         text="Create Deal"
         onClick={handleCreateDeal}
         secondary={false}

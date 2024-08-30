@@ -29,14 +29,6 @@ function Join({ setActive, selected, userId }) {
   return (
     <div>
       <div>
-        <Button_extra
-          text="Back"
-          inactive
-          onClick={() => setActive(0)}
-          disabled={selected === 0}
-          secondary={true}
-        />
-
         <p>{text}</p>
       </div>
 

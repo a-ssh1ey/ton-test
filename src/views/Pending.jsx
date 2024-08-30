@@ -34,14 +34,6 @@ function Pending({ setActive, selected, userId }) {
 
   return (
     <div>
-      <Button_extra
-        text="Back"
-        inactive
-        onClick={() => setActive(0)}
-        disabled={selected === 0}
-        secondary={true}
-      />
-
       <ul>
         {deals.map((deal) => (
           <li key={deal.id}>
