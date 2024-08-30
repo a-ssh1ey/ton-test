@@ -8,6 +8,7 @@ import UserProfile from "./components/UserProfile/UserProfile";
 import "@twa-dev/sdk";
 import TransferTon from "./components/TransferTon/TransferTon";
 import { Create, Join, MainPage, Pending } from "./views";
+import Navbar from "./components/Navbar/Navbar";
 
 const accessToken = "7456487049:AAF148xa94-xy-0xiq-1wylHQe1e3YGk3Tc";
 
@@ -58,6 +59,7 @@ function App() {
             <UserProfile userId={userId} botToken={accessToken} />
           </div>
           {components[active]}
+          <Navbar setActive={setActive} selected={active} />
         </FlexBoxCol>
       </div>
     </div>
