@@ -4,13 +4,16 @@ import axios from "axios";
 import { APIURL } from "../../configure";
 
 function Create({ setActive, selected, userId }) {
-  // Добавляем userId как пропс
   const [text, setText] = useState("");
+  const [dealAmount, setDealAmount] = useState(""); // Добавлено состояние для суммы сделки
 
   const handleCreateDeal = () => {
     console.log("Sending request...");
     axios
-      .post(`${APIURL}/playground/create-deal/`, { user_id: userId }) // Передаем userId в запросе
+      .post(`${APIURL}/playground/create-deal/`, {
+        user_id: userId,
+        amount: dealAmount, // Передаем сумму сделки в запросе
+      })
       .then((response) => {
         console.log("Response received:", response.data);
         setText(`Deal created with code: ${response.data.code}`);
@@ -23,6 +26,12 @@ function Create({ setActive, selected, userId }) {
 
   return (
     <div>
+      <input
+        type="number"
+        placeholder="Enter deal amount"
+        value={dealAmount}
+        onChange={(e) => setDealAmount(e.target.value)} // Обновляем состояние при изменении инпута
+      />
       <Button_extra
         text="Create Deal"
         onClick={handleCreateDeal}
