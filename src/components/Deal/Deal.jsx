@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import "./Deal.css";
 import { APIURL } from "../../../configure";
-import { useTonConnect } from "../../hooks/useTonConnect"; // Импортируем хук
+import { useTonConnect } from "../../hooks/useTonConnect"; // Import the hook
 import { Address, toNano } from "ton";
 
 const Deal = ({
@@ -14,7 +14,7 @@ const Deal = ({
   amount,
   recipient,
 }) => {
-  const { sender, connected } = useTonConnect(); // Подключаемся к TonConnect
+  const { sender, connected } = useTonConnect(); // Use TonConnect
 
   const handleCancel = async () => {
     try {
@@ -36,23 +36,13 @@ const Deal = ({
       return;
     }
 
-    if (
-      !recipient ||
-      typeof recipient !== "string" ||
-      recipient.trim() === ""
-    ) {
-      console.error("Invalid recipient address");
-      return;
-    }
-
     try {
-      const address = Address.parse(recipient); // Используем адрес получателя из пропсов
       await sender.send({
-        to: address,
-        value: toNano(amount), // Используем сумму сделки из пропсов
+        to: Address.parse(recipient), // Use the recipient from props
+        value: toNano(amount), // Use the amount from props
       });
       console.log("Transfer successful");
-      onStatusChange(dealId, "completed"); // Обновляем статус сделки после успешного перевода
+      onStatusChange(dealId, "completed"); // Update deal status after successful transfer
     } catch (error) {
       console.error("Transfer failed:", error);
     }
@@ -88,7 +78,6 @@ const Deal = ({
         <p>Status: {dealStatus}</p>
         <p>Amount: {amount} TON</p>
         <p>Recipient: {recipient || "N/A"}</p>{" "}
-        {/* Если recipient отсутствует, отображаем "N/A" */}
       </div>
       <div className="deal-actions">{renderButtons()}</div>
     </div>
