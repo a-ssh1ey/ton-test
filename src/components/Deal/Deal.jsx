@@ -36,9 +36,19 @@ const Deal = ({
       return;
     }
 
+    if (
+      !recipient ||
+      typeof recipient !== "string" ||
+      recipient.trim() === ""
+    ) {
+      console.error("Invalid recipient address");
+      return;
+    }
+
     try {
+      const address = Address.parse(recipient); // Используем адрес получателя из пропсов
       await sender.send({
-        to: Address.parse(recipient), // Используем адрес получателя из пропсов
+        to: address,
         value: toNano(amount), // Используем сумму сделки из пропсов
       });
       console.log("Transfer successful");
@@ -77,7 +87,8 @@ const Deal = ({
         <p>Code: {dealCode}</p>
         <p>Status: {dealStatus}</p>
         <p>Amount: {amount} TON</p>
-        <p>Recipient: {recipient}</p>
+        <p>Recipient: {recipient || "N/A"}</p>{" "}
+        {/* Если recipient отсутствует, отображаем "N/A" */}
       </div>
       <div className="deal-actions">{renderButtons()}</div>
     </div>
