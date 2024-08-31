@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Button_extra from "../components/Button_extra/Button_extra";
 import Deal from "../components/Deal/Deal";
 import { APIURL } from "../../configure";
 
@@ -42,6 +41,8 @@ function Pending({ setActive, selected, userId }) {
               dealCode={deal.code}
               dealStatus={deal.status}
               role={deal.role}
+              amount={deal.amount}
+              recipient={deal.recipient}
               onStatusChange={handleStatusChange} // Passing the function to Deal
             />
           </li>
