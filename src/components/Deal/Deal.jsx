@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import "./Deal.css";
 import { APIURL } from "../../../configure";
-import { useTonConnect } from "../../hooks/useTonConnect"; // Import the hook
+import { useTonConnect } from "../../hooks/useTonConnect"; // Импортируем хук
 import { Address, toNano } from "ton";
 
 const Deal = ({
@@ -14,7 +14,7 @@ const Deal = ({
   amount,
   recipient,
 }) => {
-  const { sender, connected } = useTonConnect(); // Use TonConnect
+  const { sender, connected } = useTonConnect(); // Подключаемся к TonConnect
 
   const handleCancel = async () => {
     try {
@@ -36,15 +36,34 @@ const Deal = ({
       return;
     }
 
+    console.log("Recipient before parsing:", recipient); // Логируем значение recipient
+
+    if (
+      !recipient ||
+      typeof recipient !== "string" ||
+      recipient.trim() === ""
+    ) {
+      console.error(
+        "Invalid recipient address: Address is missing or not a valid string."
+      );
+      return;
+    }
+
     try {
+      if (!Address.isFriendly(recipient)) {
+        console.error("Recipient address is not in a friendly format.");
+        return;
+      }
+
+      const address = Address.parse(recipient); // Пробуем распарсить адрес
       await sender.send({
-        to: Address.parse(recipient), // Use the recipient from props
-        value: toNano(amount), // Use the amount from props
+        to: address,
+        value: toNano(amount), // Используем сумму сделки из пропсов
       });
       console.log("Transfer successful");
-      onStatusChange(dealId, "completed"); // Update deal status after successful transfer
+      onStatusChange(dealId, "completed"); // Обновляем статус сделки после успешного перевода
     } catch (error) {
-      console.error("Transfer failed:", error);
+      console.error("Transfer failed:", error); // Ловим ошибку и логируем её
     }
   };
 

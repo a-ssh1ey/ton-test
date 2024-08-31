@@ -34,19 +34,22 @@ function Pending({ setActive, selected, userId }) {
   return (
     <div>
       <ul>
-        {deals.map((deal) => (
-          <li key={deal.id}>
-            <Deal
-              dealId={deal.id}
-              dealCode={deal.code}
-              dealStatus={deal.status}
-              role={deal.role}
-              amount={deal.amount}
-              recipient={deal.recipient}
-              onStatusChange={handleStatusChange} // Passing the function to Deal
-            />
-          </li>
-        ))}
+        {deals.map((deal) => {
+          console.log("Deal recipient:", deal.recipient); // Логируем значение recipient
+          return (
+            <li key={deal.id}>
+              <Deal
+                dealId={deal.id}
+                dealCode={deal.code}
+                dealStatus={deal.status}
+                role={deal.role}
+                amount={deal.amount}
+                recipient={deal.recipient} // Передаем recipient в компонент Deal
+                onStatusChange={handleStatusChange}
+              />
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
