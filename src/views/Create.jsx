@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import Button_extra from "../components/Button_extra/Button_extra";
 import axios from "axios";
 import { APIURL } from "../../configure";
+import { useTonConnect } from "../hooks/useTonConnect";
 
 function Create({ setActive, selected, userId }) {
   const [text, setText] = useState("");
-  const [dealAmount, setDealAmount] = useState(""); // Добавлено состояние для суммы сделки
+  const [dealAmount, setDealAmount] = useState(""); // Состояние для суммы сделки
+  const { wallet: walletAddress } = useTonConnect(); // Получаем адрес кошелька
 
   const handleCreateDeal = () => {
     console.log("Sending request...");
@@ -13,6 +15,7 @@ function Create({ setActive, selected, userId }) {
       .post(`${APIURL}/playground/create-deal/`, {
         user_id: userId,
         amount: dealAmount, // Передаем сумму сделки в запросе
+        wallet_address: walletAddress, // Передаем адрес кошелька в запросе
       })
       .then((response) => {
         console.log("Response received:", response.data);

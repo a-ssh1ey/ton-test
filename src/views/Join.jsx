@@ -1,17 +1,21 @@
 import React, { useState } from "react";
-import { Button } from "../components/styled/styled";
-import Button_extra from "../components/Button_extra/Button_extra";
 import axios from "axios";
 import { APIURL } from "../../configure";
+import { useTonConnect } from "../hooks/useTonConnect"; // Предполагается, что этот хук возвращает адрес кошелька
 
 function Join({ setActive, selected, userId }) {
   const [text, setText] = useState("");
   const [code, setCode] = useState("");
+  const { wallet: walletAddress } = useTonConnect(); // Получаем адрес кошелька
 
   const handleJoinDeal = () => {
     console.log("Sending request...");
     axios
-      .post(`${APIURL}/playground/join-deal/`, { code, user_id: userId })
+      .post(`${APIURL}/playground/join-deal/`, {
+        code,
+        user_id: userId,
+        wallet_address: walletAddress, // Передаем адрес кошелька в запросе
+      })
       .then((response) => {
         console.log("Response received:", response.data);
         setText(`User joined deal with ID: ${response.data.deal_id}`);
