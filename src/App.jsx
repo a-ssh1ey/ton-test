@@ -59,7 +59,7 @@ function App() {
             <UserProfile userId={userId} botToken={accessToken} />
           </div>
           {components[active]}
-          <Navbar setActive={setActive} selected={active} />
+          {active !== 0 && <Navbar setActive={setActive} selected={active} />}
         </FlexBoxCol>
       </div>
     </div>
