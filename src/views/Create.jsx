@@ -19,7 +19,7 @@ function Create({ setActive, selected, userId }) {
       })
       .then((response) => {
         console.log("Response received:", response.data);
-        setText(`Deal created with code: ${response.data.code}`);
+        setText(`Deal created with code: ${response.data.deal_code}`);
       })
       .catch((error) => {
         console.error("Error during request:", error);
