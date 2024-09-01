@@ -50,11 +50,6 @@ const Deal = ({
     }
 
     try {
-      if (!Address.isFriendly(recipient)) {
-        console.error("Recipient address is not in a friendly format.");
-        return;
-      }
-
       const address = Address.parse(recipient); // Пробуем распарсить адрес
       await sender.send({
         to: address,
