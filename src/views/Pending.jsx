@@ -43,7 +43,7 @@ function Pending({ setActive, selected, userId }) {
                 dealStatus={deal.status}
                 role={deal.role}
                 amount={deal.amount}
-                recipient={deal.recipient} // Передаем recipient в компонент Deal
+                recipient={deal.wallet_address} // Передаем recipient в компонент Deal
                 onStatusChange={handleStatusChange}
               />
             </li>
