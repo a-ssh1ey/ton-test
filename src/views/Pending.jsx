@@ -35,7 +35,6 @@ function Pending({ setActive, selected, userId }) {
     <div>
       <ul>
         {deals.map((deal) => {
-          console.log("Deal recipient:", deal.recipient); // Логируем значение recipient
           return (
             <li key={deal.id}>
               <Deal

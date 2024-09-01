@@ -88,6 +88,7 @@ const Deal = ({
     }
     return null;
   };
+  console.log("Recipient in Deal component:", recipient);
 
   return (
     <div className="deal-container">
