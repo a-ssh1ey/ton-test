@@ -9,10 +9,10 @@ const Deal = ({
   dealId,
   dealCode,
   dealStatus,
-  role,
+  role, // Роль пользователя (buyer/seller)
   onStatusChange,
   amount,
-  recipient,
+  sellerWallet, // Кошелек продавца
 }) => {
   const { sender, connected } = useTonConnect(); // Подключаемся к TonConnect
 
@@ -36,7 +36,9 @@ const Deal = ({
       return;
     }
 
-    console.log("Recipient before parsing:", recipient); // Логируем значение recipient
+    const recipient = sellerWallet; // Всегда используем sellerWallet как получателя
+
+    console.log("Recipient before parsing:", recipient);
 
     if (
       !recipient ||
@@ -83,7 +85,6 @@ const Deal = ({
     }
     return null;
   };
-  console.log("Recipient in Deal component:", recipient);
 
   return (
     <div className="deal-container">
@@ -92,7 +93,8 @@ const Deal = ({
         <p>Code: {dealCode}</p>
         <p>Status: {dealStatus}</p>
         <p>Amount: {amount} TON</p>
-        <p>Recipient: {recipient || "N/A"}</p>{" "}
+        <p>Recipient: {sellerWallet || "N/A"}</p>{" "}
+        {/* Показываем адрес продавца */}
       </div>
       <div className="deal-actions">{renderButtons()}</div>
     </div>
