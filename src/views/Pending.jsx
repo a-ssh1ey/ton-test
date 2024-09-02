@@ -26,7 +26,7 @@ function Pending({ setActive, selected, userId }) {
   const handleStatusChange = (dealId, newStatus) => {
     setDeals((prevDeals) =>
       prevDeals.map((deal) =>
-        deal.id === dealId ? { ...deal, status: newStatus } : deal
+        deal.deal_id === dealId ? { ...deal, status: newStatus } : deal
       )
     );
   };
@@ -36,10 +36,10 @@ function Pending({ setActive, selected, userId }) {
       <ul>
         {deals.map((deal) => {
           return (
-            <li key={deal.id}>
+            <li key={deal.deal_id}>
               <Deal
-                dealId={deal.id}
-                dealCode={deal.code}
+                dealId={deal.deal_id}
+                dealCode={deal.deal_code}
                 dealStatus={deal.status}
                 role={deal.role}
                 amount={deal.amount}
