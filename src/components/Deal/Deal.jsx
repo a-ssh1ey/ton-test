@@ -2,19 +2,20 @@ import React from "react";
 import axios from "axios";
 import "./Deal.css";
 import { APIURL } from "../../../configure";
-import { useTonConnect } from "../../hooks/useTonConnect"; // Импортируем хук
+import { useTonConnect } from "../../hooks/useTonConnect";
 import { Address, toNano } from "ton";
 
 const Deal = ({
   dealId,
   dealCode,
   dealStatus,
-  role, // Роль пользователя (buyer/seller)
-  onStatusChange,
+  role,
   amount,
-  sellerWallet, // Кошелек продавца
+  buyerWallet,
+  sellerWallet,
+  onStatusChange,
 }) => {
-  const { sender, connected } = useTonConnect(); // Подключаемся к TonConnect
+  const { sender, connected } = useTonConnect();
 
   const handleCancel = async () => {
     try {
@@ -36,7 +37,7 @@ const Deal = ({
       return;
     }
 
-    const recipient = sellerWallet;
+    const recipient = role === "buyer" ? sellerWallet : buyerWallet;
 
     if (
       !recipient ||
@@ -50,15 +51,15 @@ const Deal = ({
     }
 
     try {
-      const address = Address.parse(recipient); // Пробуем распарсить адрес
+      const address = Address.parse(recipient);
       await sender.send({
         to: address,
-        value: toNano(amount), // Используем сумму сделки из пропсов
+        value: toNano(amount),
       });
       console.log("Transfer successful");
-      onStatusChange(dealId, "completed"); // Обновляем статус сделки после успешного перевода
+      onStatusChange(dealId, "completed");
     } catch (error) {
-      console.error("Transfer failed:", error); // Ловим ошибку и логируем её
+      console.error("Transfer failed:", error);
     }
   };
 
@@ -91,8 +92,9 @@ const Deal = ({
         <p>Code: {dealCode}</p>
         <p>Status: {dealStatus}</p>
         <p>Amount: {amount} TON</p>
-        <p>Recipient: {sellerWallet || "N/A"}</p>{" "}
-        {/* Показываем адрес продавца */}
+        <p>
+          Recipient: {role === "buyer" ? sellerWallet : buyerWallet || "N/A"}
+        </p>
       </div>
       <div className="deal-actions">{renderButtons()}</div>
     </div>

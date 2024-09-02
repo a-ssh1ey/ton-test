@@ -42,7 +42,8 @@ function Pending({ setActive, selected, userId }) {
                 dealStatus={deal.status}
                 role={deal.role}
                 amount={deal.amount}
-                sellerWallet={deal.wallet_address}
+                buyerWallet={deal.buyer_wallet} // Передаем кошелек покупателя
+                sellerWallet={deal.seller_wallet} // Передаем кошелек продавца
                 onStatusChange={handleStatusChange}
               />
             </li>
