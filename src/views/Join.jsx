@@ -11,7 +11,7 @@ function Join({ setActive, selected, userId }) {
   const handleJoinDeal = () => {
     console.log("Sending request...");
     axios
-      .post(`${APIURL}/playground/join-deal/`, {
+      .post(`${APIURL}playground/join-deal/`, {
         deal_code: code,
         user_id: userId,
         wallet_address: walletAddress, // Передаем адрес кошелька в запросе
