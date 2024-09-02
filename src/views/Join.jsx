@@ -12,7 +12,7 @@ function Join({ setActive, selected, userId }) {
     console.log("Sending request...");
     axios
       .post(`${APIURL}/playground/join-deal/`, {
-        code,
+        deal_code: code,
         user_id: userId,
         wallet_address: walletAddress, // Передаем адрес кошелька в запросе
       })
