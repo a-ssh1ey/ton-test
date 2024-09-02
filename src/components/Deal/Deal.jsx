@@ -36,9 +36,7 @@ const Deal = ({
       return;
     }
 
-    const recipient = sellerWallet; // Всегда используем sellerWallet как получателя
-
-    console.log("Recipient before parsing:", recipient);
+    const recipient = sellerWallet;
 
     if (
       !recipient ||

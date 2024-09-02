@@ -22,7 +22,6 @@ function Pending({ setActive, selected, userId }) {
     }
   }, [userId]);
 
-  // Function to handle the status change
   const handleStatusChange = (dealId, newStatus) => {
     setDeals((prevDeals) =>
       prevDeals.map((deal) =>
@@ -43,7 +42,7 @@ function Pending({ setActive, selected, userId }) {
                 dealStatus={deal.status}
                 role={deal.role}
                 amount={deal.amount}
-                sellerWallet={deal.wallet_address} // Передаем sellerWallet в компонент Deal
+                sellerWallet={deal.wallet_address}
                 onStatusChange={handleStatusChange}
               />
             </li>
