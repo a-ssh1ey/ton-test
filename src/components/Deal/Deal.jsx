@@ -2,7 +2,8 @@ import React from "react";
 import axios from "axios";
 import "./Deal.css";
 import { APIURL } from "../../../configure";
-import { useTonConnectUI } from "@tonconnect/ui-react";
+import { useTonConnect } from "../../hooks/useTonConnect";
+import { Address, toNano } from "ton"; // Импортируйте toNano из библиотеки ton
 
 const Deal = ({
   dealId,
@@ -14,7 +15,7 @@ const Deal = ({
   sellerWallet,
   onStatusChange,
 }) => {
-  const [tonConnectUI] = useTonConnectUI();
+  const { sender, connected } = useTonConnect();
 
   const handleCancel = async () => {
     try {
@@ -31,6 +32,11 @@ const Deal = ({
   };
 
   const handleTransfer = async () => {
+    if (!connected) {
+      console.error("Wallet not connected");
+      return;
+    }
+
     const recipient = role === "buyer" ? sellerWallet : buyerWallet;
 
     if (
@@ -44,17 +50,12 @@ const Deal = ({
       return;
     }
 
-    const transaction = {
-      messages: [
-        {
-          address: recipient, // Адрес получателя
-          amount: toNano(amount).toString(), // Сумма в nanotons
-        },
-      ],
-    };
-
     try {
-      await tonConnectUI.sendTransaction(transaction);
+      const address = Address.parse(recipient);
+      await sender.send({
+        to: address,
+        value: toNano(amount), // Убедитесь, что toNano используется здесь
+      });
       console.log("Transfer successful");
       onStatusChange(dealId, "completed");
     } catch (error) {
