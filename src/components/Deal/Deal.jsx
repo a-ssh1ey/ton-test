@@ -52,11 +52,15 @@ const Deal = ({
 
     try {
       console.log("Raw recipient address:", recipient);
+
       const address = Address.parse(recipient);
       console.log("Parsed recipient address:", address.toString());
 
+      const nonBounceableAddress = address.toFriendly({ bounceable: false });
+      console.log("nonBounceableAddress:", nonBounceableAddress.toString());
+
       await sender.send({
-        to: address,
+        to: nonBounceableAddress,
         value: toNano(amount),
       });
       console.log("Transfer successful");
