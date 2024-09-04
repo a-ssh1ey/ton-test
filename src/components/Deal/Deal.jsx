@@ -51,9 +51,12 @@ const Deal = ({
     }
 
     try {
+      console.log("Raw recipient address:", recipient);
       const address = Address.parse(recipient);
+      console.log("Parsed recipient address:", address.toString());
+
       await sender.send({
-        to: "0:81c393eb7d7ae583c8b696505690e30e648ad9baed6abd0eed14607effef6307",
+        to: address,
         value: toNano(amount),
       });
       console.log("Transfer successful");
