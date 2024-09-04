@@ -53,8 +53,8 @@ const Deal = ({
     try {
       const address = Address.parse(recipient);
       await sender.send({
-        to: "UQCBw5PrfXrlg8i2llBWkOMOZIrZuu1qvQ7tFGB-_-9jB4IC",
-        value: toNano(amount), // Убедитесь, что toNano используется здесь
+        to: "0:81c393eb7d7ae583c8b696505690e30e648ad9baed6abd0eed14607effef6307",
+        value: toNano(amount),
       });
       console.log("Transfer successful");
       onStatusChange(dealId, "completed");
