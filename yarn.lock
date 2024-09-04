@@ -279,11 +279,6 @@
     estree-walker "^2.0.2"
     picomatch "^2.3.1"
 
-"@scarf/scarf@^1.1.1":
-  version "1.3.0"
-  resolved "https://registry.npmjs.org/@scarf/scarf/-/scarf-1.3.0.tgz"
-  integrity sha512-lHKK8M5CTcpFj2hZDB3wIjb0KAbEOgDmiJGDv1WBRfQgRm/a8/XMEkG/N1iM01xgbUDsPQwi42D+dFo1XPAKew==
-
 "@tanstack/query-core@4.36.1":
   version "4.36.1"
   resolved "https://registry.npmjs.org/@tanstack/query-core/-/query-core-4.36.1.tgz"
@@ -865,11 +860,6 @@ for-each@^0.3.3:
   dependencies:
     is-callable "^1.1.3"
 
-fp-ts@^2.11.1:
-  version "2.16.9"
-  resolved "https://registry.npmjs.org/fp-ts/-/fp-ts-2.16.9.tgz"
-  integrity sha512-+I2+FnVB+tVaxcYyQkHUq7ZdKScaBlX53A41mxQtpIccsfyv8PzdzP7fzp2AY832T4aoK6UZ5WRX/ebGd8uZuQ==
-
 fsevents@~2.3.2:
   version "2.3.3"
   resolved "https://registry.npmjs.org/fsevents/-/fsevents-2.3.3.tgz"
@@ -999,18 +989,6 @@ inherits@^2.0.1, inherits@^2.0.3, inherits@^2.0.4, inherits@~2.0.3, inherits@~2.
   version "2.0.4"
   resolved "https://registry.npmjs.org/inherits/-/inherits-2.0.4.tgz"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
-
-io-ts-reporters@^2.0.0:
-  version "2.0.1"
-  resolved "https://registry.npmjs.org/io-ts-reporters/-/io-ts-reporters-2.0.1.tgz"
-  integrity sha512-RVpLstYBsmTGgCW9wJ5KVyN/eRnRUDp87Flt4D1O3aJ7oAnd8csq8aXuu7ZeNK8qEDKmjUl9oUuzfwikaNAMKQ==
-  dependencies:
-    "@scarf/scarf" "^1.1.1"
-
-io-ts@^2.2.16:
-  version "2.2.21"
-  resolved "https://registry.npmjs.org/io-ts/-/io-ts-2.2.21.tgz"
-  integrity sha512-zz2Z69v9ZIC3mMLYWIeoUcwWD6f+O7yP92FMVVaXEOSZH1jnVBmET/urd/uoarD1WGBY4rCj8TAyMPzsGNzMFQ==
 
 is-arguments@^1.0.4:
   version "1.1.1"
@@ -1652,18 +1630,16 @@ ton-crypto@^3.2.0:
     ton-crypto-primitives "2.0.0"
     tweetnacl "1.0.3"
 
-ton@13.3.0:
-  version "13.3.0"
-  resolved "https://registry.npmjs.org/ton/-/ton-13.3.0.tgz"
-  integrity sha512-ygNZ3a8xgDcftudgmq2lNzFNrQtNhUdmBneLJI8C2iBuD9RAfpnjae4eIpjPLfCsLKH8Nmvh2JOESfM7lvsCSw==
+ton@^13.9.0:
+  version "13.9.0"
+  resolved "https://registry.npmjs.org/ton/-/ton-13.9.0.tgz"
+  integrity sha512-IjZa4vFsyYHzQFY3kMSK/vw8T9b4zSJlSkZOgD8qeP4AFVxcD6pZ7TxfATwLJnA/4MCbaM9DY0V076oMjluDQg==
   dependencies:
     axios "^0.25.0"
     dataloader "^2.0.0"
-    fp-ts "^2.11.1"
-    io-ts "^2.2.16"
-    io-ts-reporters "^2.0.0"
     symbol.inspect "1.0.1"
     teslabot "^1.3.0"
+    zod "^3.21.4"
 
 tr46@~0.0.3:
   version "0.0.3"
@@ -1799,3 +1775,8 @@ yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.npmjs.org/yocto-queue/-/yocto-queue-0.1.0.tgz"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
+
+zod@^3.21.4:
+  version "3.23.8"
+  resolved "https://registry.npmjs.org/zod/-/zod-3.23.8.tgz"
+  integrity sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==
