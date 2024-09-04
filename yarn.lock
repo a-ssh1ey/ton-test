@@ -1607,10 +1607,10 @@ to-fast-properties@^2.0.0:
   resolved "https://registry.npmjs.org/to-fast-properties/-/to-fast-properties-2.0.0.tgz"
   integrity sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog==
 
-ton-core@^0.46.0:
-  version "0.46.0"
-  resolved "https://registry.npmjs.org/ton-core/-/ton-core-0.46.0.tgz"
-  integrity sha512-QUOlL98652rsOPTIvB01+MsAgLI1ehvpsngYzNWr7pxHOk4xk64Adq0StTmqGEchkzjhNowIo3gzwGGPrxo3zw==
+ton-core@^0.53.0:
+  version "0.53.0"
+  resolved "https://registry.npmjs.org/ton-core/-/ton-core-0.53.0.tgz"
+  integrity sha512-uO/U1oVLdEliWWbwfNQQK+61C+KM0ehcTdHQ6cN0WSEH2UzGfdVFpC4Wb0ph+wUYe/5njl7TA0uL9nif9Q6qwA==
   dependencies:
     symbol.inspect "1.0.1"
 
