@@ -36,7 +36,6 @@ const Deal = ({
       }
     } catch (error) {
       console.error("Failed to update deal status:", error);
-      // Consider adding user feedback here, e.g., showing an error message
     }
   };
 
@@ -49,6 +48,16 @@ const Deal = ({
     }
   }, [dealId, updateDealStatus]);
 
+  // Function to handle marking the deal as completed
+  const handleMarkAsCompleted = useCallback(async () => {
+    try {
+      await updateDealStatus("completed");
+    } catch (error) {
+      console.error("Failed to mark the deal as completed:", error);
+    }
+  }, [dealId, updateDealStatus]);
+
+  // Function to handle fund transfer
   const handleTransfer = useCallback(async () => {
     if (!connected) {
       console.error("Wallet not connected");
@@ -105,7 +114,13 @@ const Deal = ({
           </button>
         );
       case "In progress":
-        return <p className="deal-in-progress">This deal is in progress.</p>;
+        return role === "seller" ? (
+          <button className="deal-button" onClick={handleMarkAsCompleted}>
+            Mark as Completed
+          </button>
+        ) : (
+          <p className="deal-in-progress">This deal is in progress.</p>
+        );
       case "completed":
         return <p className="deal-completed">This deal is completed.</p>;
       case "canceled":
@@ -128,4 +143,5 @@ const Deal = ({
     </div>
   );
 };
+
 export default Deal;
