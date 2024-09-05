@@ -38,7 +38,7 @@ function Pending({ setActive, selected, userId }) {
             <li key={deal.deal_id}>
               <Deal
                 dealId={deal.deal_id}
-                dealCode={deal.deal_code}
+                dealCode={deal.deal_code || "N/A"}
                 dealStatus={deal.status}
                 role={deal.role}
                 amount={deal.amount}
