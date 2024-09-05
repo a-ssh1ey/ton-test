@@ -82,7 +82,7 @@ export default function Deal({
 
     try {
       await sender.send({
-        to: address,
+        to: "UQBJpt_NQ_x7eB7pk2JK1W9CQFdoIgOVFQkNLroXkAFDfCMg",
         value: toNano(amount),
       });
       console.log("Transfer successful");
