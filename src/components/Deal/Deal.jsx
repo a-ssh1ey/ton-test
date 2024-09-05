@@ -21,26 +21,37 @@ const Deal = ({
   const getRecipientAddress = () =>
     role === "buyer" ? sellerWallet : buyerWallet;
 
+  // Function to update deal status in the database
+  const updateDealStatus = async (newStatus) => {
+    try {
+      const response = await axios.post(
+        `${APIURL}/playground/update-deal-status/`,
+        {
+          dealId,
+          status: newStatus,
+        }
+      );
+      if (response.status === 200) {
+        onStatusChange(dealId, newStatus);
+      }
+    } catch (error) {
+      console.error("Failed to update deal status:", error);
+      // Consider adding user feedback here, e.g., showing an error message
+    }
+  };
+
   // Function to handle deal cancellation
   const handleCancel = useCallback(async () => {
     try {
-      const response = await axios.post(`${APIURL}/playground/cancel-deal/`, {
-        dealId,
-      });
-      if (response.status === 200) {
-        onStatusChange(dealId, "canceled");
-      }
+      await updateDealStatus("canceled");
     } catch (error) {
       console.error("Failed to cancel the deal:", error);
-      // Consider adding user feedback here, e.g., showing an error message
     }
-  }, [dealId, onStatusChange]);
+  }, [dealId, updateDealStatus]);
 
-  // Function to handle fund transfer
   const handleTransfer = useCallback(async () => {
     if (!connected) {
       console.error("Wallet not connected");
-      // Consider adding user feedback here, e.g., showing an error message
       return;
     }
 
@@ -54,23 +65,31 @@ const Deal = ({
       console.error(
         "Invalid recipient address: Address is missing or not a valid string."
       );
-      // Consider adding user feedback here, e.g., showing an error message
       return;
     }
 
     try {
-      const address = Address.parse(recipient).toString({ bounceable: false });
+      const address = Address.parse(recipient).toString({
+        bounceable: false,
+      });
       await sender.send({
         to: address,
         value: toNano(amount),
       });
       console.log("Transfer successful");
-      onStatusChange(dealId, "completed");
+
+      await updateDealStatus("In progress");
     } catch (error) {
       console.error("Transfer failed:", error);
-      // Consider adding user feedback here, e.g., showing an error message
     }
-  }, [connected, sender, amount, dealId, onStatusChange, getRecipientAddress]);
+  }, [
+    connected,
+    sender,
+    amount,
+    dealId,
+    getRecipientAddress,
+    updateDealStatus,
+  ]);
 
   // Function to render action buttons based on deal status and user role
   const renderButtons = () => {
@@ -85,6 +104,8 @@ const Deal = ({
             Cancel
           </button>
         );
+      case "In progress":
+        return <p className="deal-in-progress">This deal is in progress.</p>;
       case "completed":
         return <p className="deal-completed">This deal is completed.</p>;
       case "canceled":
@@ -107,5 +128,4 @@ const Deal = ({
     </div>
   );
 };
-
 export default Deal;
