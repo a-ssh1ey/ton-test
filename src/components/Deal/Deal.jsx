@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import axios from "axios";
 import { Address, toNano } from "ton";
 import { APIURL } from "../../../configure";
@@ -22,19 +22,32 @@ export default function Deal({
   );
 
   const recipient = getRecipientAddress();
-  const address = Address.parse(recipient).toString({
-    bounceable: false,
-  });
+
+  const address = useMemo(() => {
+    if (!recipient) return null;
+    try {
+      return Address.parse(recipient).toString({
+        bounceable: false,
+      });
+    } catch (error) {
+      console.error("Failed to parse address:", error);
+      return null;
+    }
+  }, [recipient]);
 
   const updateDealStatus = useCallback(
     async (newStatus) => {
+      if (!address) {
+        console.error("Invalid recipient address");
+        return;
+      }
       try {
         const response = await axios.post(
           `${APIURL}/playground/update-deal-status/`,
           {
             dealId,
             status: newStatus,
-            recipientAddress: address, // Send the recipient address to the API
+            recipientAddress: address,
           }
         );
         if (response.status === 200) {
@@ -60,6 +73,10 @@ export default function Deal({
   const handleTransfer = useCallback(async () => {
     if (!connected) {
       console.error("Wallet not connected");
+      return;
+    }
+    if (!address) {
+      console.error("Invalid recipient address");
       return;
     }
 
@@ -119,7 +136,7 @@ export default function Deal({
           <strong>Amount:</strong> {amount} TON
         </p>
         <p>
-          <strong>Recipient:</strong> {getRecipientAddress() || "N/A"}
+          <strong>Recipient:</strong> {recipient || "N/A"}
         </p>
       </div>
       <div
