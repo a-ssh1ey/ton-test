@@ -12,42 +12,31 @@ export default function Deal({
   amount,
   buyerWallet,
   sellerWallet,
+  dealWalletAddress, // Include the deal wallet address
   onStatusChange,
 }) {
   const { sender, connected } = useTonConnect();
 
-  const getRecipientAddress = useCallback(
-    () => (role === "buyer" ? sellerWallet : buyerWallet),
-    [role, sellerWallet, buyerWallet]
-  );
-
-  const recipient = getRecipientAddress();
-
   const address = useMemo(() => {
-    if (!recipient) return null;
+    if (!dealWalletAddress) return null;
     try {
-      return Address.parse(recipient).toString({
+      return Address.parse(dealWalletAddress).toString({
         bounceable: false,
       });
     } catch (error) {
       console.error("Failed to parse address:", error);
       return null;
     }
-  }, [recipient]);
+  }, [dealWalletAddress]);
 
   const updateDealStatus = useCallback(
     async (newStatus) => {
-      if (!address) {
-        console.error("Invalid recipient address");
-        return;
-      }
       try {
         const response = await axios.post(
           `${APIURL}/playground/update-deal-status/`,
           {
             dealId,
             status: newStatus,
-            recipientAddress: address,
           }
         );
         if (response.status === 200) {
@@ -57,7 +46,7 @@ export default function Deal({
         console.error("Failed to update deal status:", error);
       }
     },
-    [dealId, address, onStatusChange]
+    [dealId, onStatusChange]
   );
 
   const handleCancel = useCallback(
@@ -76,17 +65,17 @@ export default function Deal({
       return;
     }
     if (!address) {
-      console.error("Invalid recipient address");
+      console.error("Invalid deal wallet address");
       return;
     }
 
     try {
       await sender.send({
-        to: "UQA3YLSutK9Jsok5MIYPUCdwntWyhQJjTJGjfcugsunsNABY",
+        to: address,
         value: toNano(amount),
       });
       console.log("Transfer successful");
-      await updateDealStatus("In progress");
+      await updateDealStatus("in_progress");
     } catch (error) {
       console.error("Transfer failed:", error);
     }
@@ -96,17 +85,28 @@ export default function Deal({
     switch (dealStatus) {
       case "created":
         return role === "buyer" ? (
-          <button onClick={handleTransfer}>Transfer</button>
+          <>
+            <p>
+              Please send {amount} TON to the deal wallet address to initiate
+              the deal.
+            </p>
+            <p>
+              <strong>Deal Wallet Address:</strong> {dealWalletAddress}
+            </p>
+            <button onClick={handleTransfer}>Send Funds</button>
+          </>
         ) : (
           <button onClick={handleCancel} style={{ color: "red" }}>
-            Cancel
+            Cancel Deal
           </button>
         );
-      case "In progress":
-        return role === "seller" ? (
-          <button onClick={handleMarkAsCompleted}>Mark as Completed</button>
+      case "in_progress":
+        return role === "buyer" ? (
+          <button onClick={handleMarkAsCompleted} style={{ color: "green" }}>
+            Release Funds
+          </button>
         ) : (
-          <p style={{ color: "yellow" }}>This deal is in progress.</p>
+          <p style={{ color: "orange" }}>Waiting for buyer to release funds.</p>
         );
       case "completed":
         return <p style={{ color: "green" }}>This deal is completed.</p>;
@@ -135,9 +135,11 @@ export default function Deal({
         <p>
           <strong>Amount:</strong> {amount} TON
         </p>
-        <p>
-          <strong>Recipient:</strong> {recipient || "N/A"}
-        </p>
+        {dealWalletAddress && (
+          <p>
+            <strong>Deal Wallet Address:</strong> {dealWalletAddress}
+          </p>
+        )}
       </div>
       <div
         className="deal-footer"
