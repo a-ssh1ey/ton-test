@@ -1,0 +1,11 @@
+.navbar{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  position: fixed;
+  bottom: 10px;
+  width: 80vw;
+  left: 50%;
+  transform: translateX(-50%);
+}

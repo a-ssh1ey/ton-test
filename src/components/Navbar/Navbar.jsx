@@ -1,7 +1,7 @@
 import React from "react";
 import { FlexBoxRow } from "../styled/styled";
 import Button_extra from "../Button_extra/Button_extra";
-
+import "./Navbar.css";
 function Navbar({ setActive, selected }) {
   const buttons = [
     { text: "Main", page: 0 },
@@ -11,7 +11,7 @@ function Navbar({ setActive, selected }) {
   ];
 
   return (
-    <FlexBoxRow>
+    <div className="navbar">
       {buttons
         .filter((button) => button.page !== selected) // исключаем кнопку текущей страницы
         .map((button) => (
@@ -22,7 +22,7 @@ function Navbar({ setActive, selected }) {
             secondary={true}
           />
         ))}
-    </FlexBoxRow>
+    </div>
   );
 }
 
