@@ -5,6 +5,7 @@
 }
 
 [data-tc-dropdown-container="true"] {
+  left: 0 !important;
   max-width: 90vw;
   max-height: 50vh;
   overflow: auto;
