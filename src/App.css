@@ -4,6 +4,13 @@
   --tg-theme-button-text-color: white;
 }
 
+[data-tc-dropdown-container="true"] {
+  max-width: 90vw;
+  max-height: 50vh;
+  overflow: auto;
+}
+
+
 .styled-app {
   position: relative;
   background-color: #e8e8e8;
