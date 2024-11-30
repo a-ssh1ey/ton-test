@@ -18,7 +18,6 @@ function App() {
   const [active, setActive] = useState(0);
 
   useEffect(() => {
-    // Извлечение userId из параметров URL при запуске приложения
     const urlParams = new URLSearchParams(window.location.search);
     console.log("urlParams", urlParams);
     const newUserId = urlParams.get("userId");
@@ -29,7 +28,7 @@ function App() {
     } else {
       console.error("No userId found in the URL parameters");
     }
-  }, []); // Выполняется только один раз при запуске приложения
+  }, []);
 
   if (!userId) {
     return <div>Error: No user ID provided</div>;
@@ -48,6 +47,7 @@ function App() {
           <div className="first_row">
             <FlexBoxRow>
               <TonConnectButton />
+
               <Button>
                 {network
                   ? network === CHAIN.MAINNET

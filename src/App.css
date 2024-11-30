@@ -5,6 +5,7 @@
 }
 
 .styled-app {
+  position: relative;
   background-color: #e8e8e8;
   color: black;
   min-height: 100vh;
@@ -19,6 +20,7 @@
 }
 
 .app-container {
+  position: relative;
   max-width: 900px;
   margin: 0 auto;
 }
