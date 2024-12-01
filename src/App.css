@@ -3,6 +3,9 @@
   --tg-theme-button-color: #2eaddc;
   --tg-theme-button-text-color: white;
 }
+tc-root{
+  background-color: blueviolet !important;
+}
 
 [data-tc-dropdown-container="true"] {
   position: absolute !important;

@@ -46,9 +46,7 @@ function App() {
         <FlexBoxCol>
           <div className="first_row">
             <FlexBoxRow>
-              <div className="ton-connect-button">
-                <TonConnectButton />
-              </div>
+              <TonConnectButton className="ton-connect-button" />
 
               <Button>
                 {network
