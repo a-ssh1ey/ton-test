@@ -3,13 +3,11 @@
   --tg-theme-button-color: #2eaddc;
   --tg-theme-button-text-color: white;
 }
-tc-root{
-  background-color: blueviolet !important;
-}
 
 [data-tc-dropdown-container="true"] {
+  position-anchor: --b;
+  left: anchor(left) !important;
   position: absolute !important;
-  left: 0 !important;
   max-width: 90vw;
   max-height: 50vh;
   overflow: auto;
@@ -17,6 +15,7 @@ tc-root{
 
 .ton-connect-button {
   position: relative;
+  anchor-name: --b;
 
 }
 .styled-app {
